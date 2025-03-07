@@ -24,6 +24,23 @@ Start your journey with LexiEaseAI today, and unlock the power of personalized, 
 3. **Insufficient Support Tools for Dyslexic Learners**  
    Dyslexic individuals often lack access to specialized tools, like writing assistants and document simplifiers, that can make reading and learning more accessible and enjoyable.
 
+## Installation
+
+
+## Key Features
+
+## Project Architecture
+
+
+## User Flow
+
+## How It Works
+
+## Snapshots of our Project
+
+## Technology Stack
+
+
 ## 📊 Impact and Benefits for Users
 
 | **Impact/Benefit**                           | **Description**                                                                                                 |
