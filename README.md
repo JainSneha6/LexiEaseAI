@@ -11,7 +11,7 @@
 
 ![image](https://github.com/user-attachments/assets/972384a0-ec2a-475c-8b75-f906afb1a0d6)
 
-
+---
 
 ## **What Problems Does LexiEase AI Solve?**
 
@@ -24,6 +24,9 @@
 3. **Insufficient Support Tools for Dyslexic Learners**  
    Dyslexic individuals often lack access to specialized tools, like writing assistants and document simplifiers, that can make reading and learning more accessible and enjoyable.
 
+![image](https://github.com/user-attachments/assets/41df37ef-b19d-44c2-a87d-3d80c068fa6c)
+
+---
 
 ##
 
