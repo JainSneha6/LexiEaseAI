@@ -30,11 +30,14 @@
 
 ## **List Of Features**
 
-# **1. Dyslexic Screening Test**
+![image](https://github.com/user-attachments/assets/a48e2245-9911-4ff3-b6a6-57d4b171c2d1)
+![image](https://github.com/user-attachments/assets/c6be600b-8771-495d-9a81-269325103a36)
+
+### **1. Dyslexic Screening Test**
 
 - **Phonological Awareness Test**
   - Providing easy, medium and hard words from various CSVs of Phoneme, Irregular, Multisyllable and Nonsensical to check their phonological awareness.
-  - The CSVs are ingested to **snowflake tables** using **Informatica's Data Ingestion**
+  - The CSVs are ingested to **Snowflake tables** using **Informatica's Data Ingestion**
   - **Informatica's Data Profiling** is done to get Claire's insights on the data along with the null & distinct percentages.
   - The words are provided to them in an audio format coverted using Google Text To Speech.
   - The written word is checked against the audio word and a score is calculated.
@@ -43,13 +46,85 @@
 
 - **Reading Passages**
   - Providing easy, medium and hard words from Reading Passages CSV.
-  - Data is ingested 
-  - The words are provided to them in an audio format coverted using Google Text To Speech.
-  - The written word is checked against the audio word and a score is calculated.
-  
+  - Data is ingested into **Snowflake tables** using **Informatica's Data Ingestion**.
+  - **Informatica's Data Profiling** is done to get Claire's insights on the data along with the null & distinct percentages.
+  - Rule Specifications and Cleansing of the data was done using **Informatica's Data Quality**
+  - Creating mappings of the data by using Data Quality Assets & Aggregates using **Informatica's Data Integration**.
+  - Linear Regression based model to calculate the fluency based on various parameters using **Informatica's Model Serve**
+  - A fluency rating is then provided to the user.
+ 
+    ![GrayOralReadingTest drawio](https://github.com/user-attachments/assets/5c937e5c-a76c-48e9-9569-4a73627b7a55)
 
-![image](https://github.com/user-attachments/assets/bdacdec2-169e-4bf0-8683-1a4988e7092c)
+### **2. Personalized Learning Path**
 
+<div align="center">
+
+| **Level of Dyslexia**  | **Personalized Learning Path**  |
+|------------------------|--------------------------------|
+| **Mild**              | Reading Passages & Reading Comprehensions |
+| **Moderate**          | Reading Passages, Comprehensions & Memory Games |
+| **Severe**            | Reading Passages, Comprehensions, Memory Games & Phonological Games |
+
+</div>
+
+### **3. AI Chatbot**
+- Creating a text to text chatbot recipe using **Informatica's Application Integration**.
+- Creating an **App Connection** and **Process Object** for Gemini Model.
+- Using **Assignment** Node to create a prompt for the LLM to respond.
+- Using **Sevice** Node to connect to the **App Connection**
+- Using another **Assignment** Node to assign the final LLM Response.
+- Utilizing **Informatica's Application Integration Console** to get the REST API to integrate with our frontend.
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/d75dd984-9839-496d-91e8-4560cb3f5ea9" width="600">
+</div>
+
+
+### **4. Notes Generation**
+
+- Creating a concise notes generation recipe using **Informatica's Application Integration**
+- Creating an **App Connection** and **Process Object** for Gemini Model.
+- Using **Assignment** Node to first extract the content from the file and then create a prompt for the LLM to respond.
+- Using **Sevice** Node to connect to the **App Connection**
+- Using another **Assignment** Node to assign the final LLM Response.
+- Utilizing **Informatica's Application Integration Console** to get the REST API to integrate with our frontend.
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/1c82cf0e-1426-4f57-a37b-38f308588a19" width="600">
+</div>
+
+
+### **5. Mind Map Generation**
+
+- Creating a prompt chaining mind map generation recipe using **Informatica's Application Integration**
+- Creating an **App Connection** and **Process Object** for Gemini Model.
+- Using **Assignment** Node to create a prompt for the LLM to respond.
+- Using **Sevice** Node to connect to the **App Connection**
+- Using another **Assignment** Node to assign the final LLM Response.
+- This prompt is further chained to get content for multiple nodes of mind map.
+- Utilizing **Informatica's Application Integration Console** to get the REST API to integrate with our frontend.
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/08dc2e3a-b477-4c01-aaf8-80ab02e62f29" width="600">
+</div>
+
+---
+
+## **Informatica's Services**
+
+### **Data Ingestion**
+
+### **Data Profiling**
+
+### **Data Quality**
+
+### **Data Integration**
+
+### **Model Serve**
+
+### **Application Integration**
+
+### **Application Integration Console**
 
 
 ## **Impact and Benefits for Users**
