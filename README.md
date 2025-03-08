@@ -112,6 +112,8 @@
 
 ## **Informatica's Services**
 
+![image](https://github.com/user-attachments/assets/939fec98-9e7f-44f5-bce9-2e3fb635810a)
+
 ### **Data Ingestion**
 
 ### **Data Profiling**
