@@ -28,7 +28,28 @@
 
 ---
 
-##
+## **List Of Features**
+
+# **1. Dyslexic Screening Test**
+
+- **Phonological Awareness Test**
+  - Providing easy, medium and hard words from various CSVs of Phoneme, Irregular, Multisyllable and Nonsensical to check their phonological awareness.
+  - The CSVs are ingested to **snowflake tables** using **Informatica's Data Ingestion**
+  - **Informatica's Data Profiling** is done to get Claire's insights on the data along with the null & distinct percentages.
+  - The words are provided to them in an audio format coverted using Google Text To Speech.
+  - The written word is checked against the audio word and a score is calculated.
+ 
+    ![PhonologicalAwarenessTest](https://github.com/user-attachments/assets/8f79b525-72ee-4f48-aaff-5ff638753f94)
+
+- **Reading Passages**
+  - Providing easy, medium and hard words from Reading Passages CSV.
+  - Data is ingested 
+  - The words are provided to them in an audio format coverted using Google Text To Speech.
+  - The written word is checked against the audio word and a score is calculated.
+  
+
+![image](https://github.com/user-attachments/assets/bdacdec2-169e-4bf0-8683-1a4988e7092c)
+
 
 
 ## **Impact and Benefits for Users**
