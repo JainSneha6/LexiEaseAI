@@ -173,11 +173,21 @@ Data ingestion is the first step in any data pipeline, enabling organizations to
 ### **Data Profiling**  
 Understanding the quality, structure, and relationships within your data is critical before analysis and integration. Informatica’s data profiling tools provide deep insights into data patterns, completeness, accuracy, and potential inconsistencies.  
 
-Key Features:  
+**Key Features**:  
 - Automated data discovery and profiling  
 - Identification of duplicate, missing, or inconsistent values  
 - Statistical analysis of datasets for better decision-making  
-- Integration with data governance and metadata management solutions  
+- Integration with data governance and metadata management solutions
+
+#### **Performing Data Profiling on Reading Passages CSV**
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/5b25aeab-c2eb-464d-ba84-16a2bb42c37d" width="800">
+</div>
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/59e2fa3c-2be6-4e87-9d71-691b3913fc0a" width="800">
+</div>
 
 ### **Data Quality**  
 Ensuring high-quality data is essential for analytics, reporting, and compliance. Informatica's data quality solutions cleanse, standardize, and enrich data to improve accuracy, completeness, and reliability.  
@@ -186,7 +196,17 @@ Key Features:
 - Automated data validation and error detection  
 - Standardization of names, addresses, and other critical data fields  
 - Duplicate detection and resolution for a single source of truth  
-- AI-powered data enrichment for enhanced insights  
+- AI-powered data enrichment for enhanced insights
+
+#### **Cleansing Reading Passages CSV**
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/88f2035a-d528-41ca-af47-fa1a8c4ebfce" width="800">
+</div>
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/1fae2329-5b2d-4e88-9852-f80ecede477d" width="800">
+</div>
 
 ### **Data Integration**  
 Organizations deal with vast amounts of data from various sources, making seamless integration a necessity. Informatica's data integration solutions enable real-time and batch processing of data across on-premises, cloud, and hybrid environments.  
