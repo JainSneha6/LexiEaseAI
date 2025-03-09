@@ -67,6 +67,7 @@
   <img src="https://github.com/user-attachments/assets/c674c08c-cecb-4e27-b234-23729834e6a6" width="600">
 </div>
 
+---
 
 ### **2. Personalized Learning Path**
 
@@ -80,6 +81,8 @@
 
 </div>
 
+---
+
 ### **3. AI Chatbot**
 - Creating a text to text chatbot recipe using **Informatica's Application Integration**.
 - Creating an **App Connection** and **Process Object** for Gemini Model.
@@ -92,6 +95,7 @@
   <img src="https://github.com/user-attachments/assets/957a6763-9b68-40d2-a2da-e539bf356f88" width="600">
 </div>
 
+---
 
 ### **4. Notes Generation**
 
@@ -106,6 +110,7 @@
   <img src="https://github.com/user-attachments/assets/9ad6f8ac-5220-45c8-b503-6ca95399f248" width="600">
 </div>
 
+---
 
 ### **5. Mind Map Generation**
 
@@ -182,46 +187,55 @@ This step involves ingesting a **Multisyllable Words CSV file** into Snowflake. 
 
 Finally, a **Nonsensical Words CSV file** is ingested into Snowflake. The left image represents the data pipeline setup, while the right image displays the Snowflake table populated with the newly ingested data.  
 
+---
 
 ### **Data Profiling**  
 Understanding the quality, structure, and relationships within your data is critical before analysis and integration. Informatica’s data profiling tools provide deep insights into data patterns, completeness, accuracy, and potential inconsistencies.  
 
-**Key Features**:  
-- Automated data discovery and profiling  
-- Identification of duplicate, missing, or inconsistent values  
-- Statistical analysis of datasets for better decision-making  
-- Integration with data governance and metadata management solutions
+---
 
-#### **Performing Data Profiling on Reading Passages CSV**
+#### **Performing Data Profiling on Reading Passages CSV**  
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/5b25aeab-c2eb-464d-ba84-16a2bb42c37d" width="800">
-</div>
+</div>  
+
+The first image displays the **initial data profiling process** for the Reading Passages CSV file. Here, Informatica scans the dataset to analyze column structure, data types, and overall completeness. It helps identify any anomalies, such as missing values, duplicates, or unexpected data formats.  
+
+---
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/59e2fa3c-2be6-4e87-9d71-691b3913fc0a" width="800">
-</div>
+</div>  
+
+The second image presents the **detailed profiling results**, highlighting key statistics such as minimum and maximum values, null percentages, unique value distribution, and patterns in the dataset. This information is crucial for assessing data quality before proceeding with integration, transformation, or analytics.  
+
+---
 
 ### **Data Quality**  
 Ensuring high-quality data is essential for analytics, reporting, and compliance. Informatica's data quality solutions cleanse, standardize, and enrich data to improve accuracy, completeness, and reliability.  
 
-Key Features:  
-- Automated data validation and error detection  
-- Standardization of names, addresses, and other critical data fields  
-- Duplicate detection and resolution for a single source of truth  
-- AI-powered data enrichment for enhanced insights
+---
 
-#### **Cleansing Reading Passages CSV**
+#### **Cleansing Reading Passages CSV**  
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/88f2035a-d528-41ca-af47-fa1a8c4ebfce" width="800">
-</div>
+</div>  
 
-#### **Rule Specificaton for Reading Passages CSV**
+The first image illustrates the **data cleansing process** for the Reading Passages CSV file. Informatica applies transformation rules to detect and fix inconsistencies such as missing values, incorrect formatting, and invalid entries. This step ensures that the dataset is accurate and structured before further processing.  
+
+---
+
+#### **Rule Specification for Reading Passages CSV**  
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/1fae2329-5b2d-4e88-9852-f80ecede477d" width="800">
-</div>
+</div>  
+
+The second image shows the **rule specification stage**, where custom validation rules are defined to enforce data quality standards. These rules may include checks for duplicate entries, standardized formatting, and constraints to ensure data integrity. This step helps maintain a clean and consistent dataset for analysis and reporting.  
+
+---
 
 ### **Data Integration**  
 Organizations deal with vast amounts of data from various sources, making seamless integration a necessity. Informatica's data integration solutions enable real-time and batch processing of data across on-premises, cloud, and hybrid environments.  
@@ -230,43 +244,51 @@ Key Features:
 - Support for ETL (Extract, Transform, Load) and ELT (Extract, Load, Transform)  
 - Scalable data pipelines with high-performance processing  
 - Pre-built connectors for cloud applications, databases, and APIs  
-- Real-time streaming and batch data integration capabilities  
+- Real-time streaming and batch data integration capabilities
+
+---
 
 ### **Model Serve**  
 Informatica’s Model Serve simplifies the deployment and management of machine learning models at scale. It ensures that AI-driven insights are seamlessly integrated into business applications and workflows for predictive analytics and automation.  
 
-Key Features:  
-- Deploy machine learning models across cloud and on-premise environments  
-- Real-time inference for AI-powered decision-making  
-- Scalable and optimized model execution for high performance  
-- Integration with existing data pipelines for seamless model deployment
+---
 
-#### **Linear Regression Model to predict Fluency Rating**
+#### **Linear Regression Model to Predict Fluency Rating**  
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/c2b671f6-a097-4eaf-9c7f-80469ce8b51a" width="800">
-</div>
+</div>  
+
+The image showcases the **deployment of a Linear Regression model** designed to predict fluency ratings based on various input parameters. This model processes structured data to generate fluency scores, enabling automated assessments and insights.  
+
+Informatica’s Model Serve allows seamless deployment of this machine learning model, ensuring real-time inference, optimized performance, and easy integration with existing data pipelines. This setup supports efficient decision-making
+
+---
 
 ### **Application Integration**  
 Modern enterprises rely on multiple applications to drive business operations. Informatica’s application integration services enable seamless connectivity between applications, APIs, and services across diverse environments.  
 
-Key Features:  
-- API-led and event-driven integration for real-time workflows  
-- Secure and reliable messaging for asynchronous communication  
-- Low-code/no-code integration tools for rapid development  
-- Scalable architecture for hybrid and multi-cloud environments
+---
 
-#### **1. AI Text To Text Chatbot Recipe**
+#### **1. AI Text-to-Text Chatbot Recipe**  
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/0b7dbe16-6538-4c75-a5a2-0dc25d2e995d" width="1000">
-</div>
+</div>  
 
-#### **2. Prompt Chaining Mind Map Generation Recipe**
+The first image illustrates an **AI-powered Text-to-Text Chatbot integration** using Informatica’s application integration services. This chatbot leverages APIs and workflow automation to process user queries, generate responses, and facilitate seamless conversational AI experiences. The integration ensures real-time interactions while maintaining high reliability and security.  
+
+---
+
+#### **2. Prompt Chaining Mind Map Generation Recipe**  
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/74b10d91-107d-4482-9774-5a3cbf75289d" width="1000">
-</div>
+</div>  
+
+The second image demonstrates a **Prompt Chaining Mind Map Generation** workflow. This setup allows multiple AI-generated responses to be linked together in a structured way, creating a mind map representation of ideas. By integrating different AI models and APIs, Informatica enables dynamic and automated content generation to enhance brainstorming, research, and decision-making processes.  
+
+---
 
 ### **Application Integration Console**  
 Managing complex integrations across multiple applications requires visibility and control. Informatica’s Application Integration Console provides a centralized platform to monitor, manage, and troubleshoot integration workflows.  
