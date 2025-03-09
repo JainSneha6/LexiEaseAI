@@ -110,23 +110,31 @@
 
 ---
 
-## **Informatica's Services**
+## **Informatica's Services**  
 
-![image](https://github.com/user-attachments/assets/91bc1eba-2848-4d75-b424-0cdcbe108b8a)
+### ![image](https://github.com/user-attachments/assets/91bc1eba-2848-4d75-b424-0cdcbe108b8a)  
 
-### **Data Ingestion**
+### **Data Ingestion**  
+Efficiently collect and transfer data from various sources into a centralized system for further processing and analysis.  
 
-### **Data Profiling**
+### **Data Profiling**  
+Analyze and assess data quality by identifying anomalies, inconsistencies, and patterns to ensure reliable data-driven decisions.  
 
-### **Data Quality**
+### **Data Quality**  
+Enhance data accuracy, completeness, and consistency with validation, cleansing, and enrichment processes.  
 
-### **Data Integration**
+### **Data Integration**  
+Seamlessly combine data from multiple sources to create a unified and reliable dataset for business intelligence and analytics.  
 
-### **Model Serve**
+### **Model Serve**  
+Deploy and manage machine learning models at scale, enabling real-time and batch inference for data-driven applications.  
 
-### **Application Integration**
+### **Application Integration**  
+Facilitate smooth data exchange between applications using APIs and event-driven workflows to ensure seamless interoperability.  
 
-### **Application Integration Console**
+### **Application Integration Console**  
+Monitor, manage, and troubleshoot application integrations through a centralized interface for improved operational efficiency.  
+
 
 
 ## **Impact and Benefits for Users**
