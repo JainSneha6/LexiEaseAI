@@ -8,8 +8,9 @@
 
 **Supported by Informatica’s secure and scalable infrastructure, it ensures a seamless and efficient learning experience.**
 
-
-![image](https://github.com/user-attachments/assets/972384a0-ec2a-475c-8b75-f906afb1a0d6)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/972384a0-ec2a-475c-8b75-f906afb1a0d6" width="800">
+</div>
 
 ---
 
@@ -24,14 +25,21 @@
 3. **Insufficient Support Tools for Dyslexic Learners**  
    Dyslexic individuals often lack access to specialized tools, like writing assistants and document simplifiers, that can make reading and learning more accessible and enjoyable.
 
-![image](https://github.com/user-attachments/assets/41df37ef-b19d-44c2-a87d-3d80c068fa6c)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/41df37ef-b19d-44c2-a87d-3d80c068fa6c" width="800">
+</div>
 
 ---
 
 ## **List Of Features**
 
-![image](https://github.com/user-attachments/assets/a48e2245-9911-4ff3-b6a6-57d4b171c2d1)
-![image](https://github.com/user-attachments/assets/c6be600b-8771-495d-9a81-269325103a36)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/a48e2245-9911-4ff3-b6a6-57d4b171c2d1" width="800">
+</div>
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/c6be600b-8771-495d-9a81-269325103a36" width="800">
+</div>
 
 ### **1. Dyslexic Screening Test**
 
@@ -41,10 +49,12 @@
   - **Informatica's Data Profiling** is done to get Claire's insights on the data along with the null & distinct percentages.
   - The words are provided to them in an audio format coverted using Google Text To Speech.
   - The written word is checked against the audio word and a score is calculated.
- 
-    ![PhonologicalAwarenessTest](https://github.com/user-attachments/assets/8f79b525-72ee-4f48-aaff-5ff638753f94)
 
-- **Reading Passages**
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/f000c4ae-f281-4454-a12b-e20eb0bf8055" width="600">
+</div>
+
+- **Gray Oral Reading Test**
   - Providing easy, medium and hard words from Reading Passages CSV.
   - Data is ingested into **Snowflake tables** using **Informatica's Data Ingestion**.
   - **Informatica's Data Profiling** is done to get Claire's insights on the data along with the null & distinct percentages.
@@ -52,8 +62,11 @@
   - Creating mappings of the data by using Data Quality Assets & Aggregates using **Informatica's Data Integration**.
   - Linear Regression based model to calculate the fluency based on various parameters using **Informatica's Model Serve**
   - A fluency rating is then provided to the user.
- 
-    ![GrayOralReadingTest drawio](https://github.com/user-attachments/assets/5c937e5c-a76c-48e9-9569-4a73627b7a55)
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/c674c08c-cecb-4e27-b234-23729834e6a6" width="600">
+</div>
+
 
 ### **2. Personalized Learning Path**
 
@@ -76,7 +89,7 @@
 - Utilizing **Informatica's Application Integration Console** to get the REST API to integrate with our frontend.
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/f381748f-5d2b-4b5f-b68c-b7d8a4d43b38" width="600">
+  <img src="https://github.com/user-attachments/assets/957a6763-9b68-40d2-a2da-e539bf356f88" width="600">
 </div>
 
 
@@ -90,7 +103,7 @@
 - Utilizing **Informatica's Application Integration Console** to get the REST API to integrate with our frontend.
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/2bfde7eb-edea-4dd4-9bea-b5889a368b9a" width="600">
+  <img src="https://github.com/user-attachments/assets/9ad6f8ac-5220-45c8-b503-6ca95399f248" width="600">
 </div>
 
 
@@ -105,14 +118,16 @@
 - Utilizing **Informatica's Application Integration Console** to get the REST API to integrate with our frontend.
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/313ed524-64c0-47bb-8b55-5a9de3a6e2ba" width="600">
+  <img src="https://github.com/user-attachments/assets/5e48308f-0925-476c-94ca-8cab05d1f502" width="600">
 </div>
 
 ---
 
 ## **Informatica's Services**  
 
-### ![image](https://github.com/user-attachments/assets/91bc1eba-2848-4d75-b424-0cdcbe108b8a)  
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/91bc1eba-2848-4d75-b424-0cdcbe108b8a" width="800">
+</div>
 
 ### **Data Ingestion**  
 Data ingestion is the first step in any data pipeline, enabling organizations to collect, import, and transfer data from diverse sources into a centralized system. Informatica provides seamless ingestion from databases, cloud storage, IoT devices, APIs, and streaming platforms. With support for batch and real-time processing, users can efficiently extract data while maintaining high performance and scalability.  
