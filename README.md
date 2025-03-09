@@ -226,7 +226,11 @@ Key Features:
 - Deploy machine learning models across cloud and on-premise environments  
 - Real-time inference for AI-powered decision-making  
 - Scalable and optimized model execution for high performance  
-- Integration with existing data pipelines for seamless model deployment  
+- Integration with existing data pipelines for seamless model deployment
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/c2b671f6-a097-4eaf-9c7f-80469ce8b51a" width="800">
+</div>
 
 ### **Application Integration**  
 Modern enterprises rely on multiple applications to drive business operations. Informatica’s application integration services enable seamless connectivity between applications, APIs, and services across diverse environments.  
