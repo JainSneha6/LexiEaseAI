@@ -139,6 +139,7 @@ Data ingestion is the first step in any data pipeline, enabling organizations to
   <img src="https://github.com/user-attachments/assets/e587c996-cb99-4104-b3e0-f62f825bd6fe" width="49.7%" />
   <img src="https://github.com/user-attachments/assets/a21a414b-444d-46bf-830b-cd221c89abb3" width="49.7%" />
 </p>  
+
 The process starts by ingesting a **Reading Passages CSV file** into a Snowflake table. The first image shows the ingestion pipeline setup, while the second image confirms the successful data load into Snowflake.  
 
 ---
@@ -148,6 +149,7 @@ The process starts by ingesting a **Reading Passages CSV file** into a Snowflake
   <img src="https://github.com/user-attachments/assets/d9ee25b8-0dd5-4ae9-bf22-f9a6bb9f085f" width="49.7%" />
   <img src="https://github.com/user-attachments/assets/01e06a17-7972-41d2-889e-a03a049beae8" width="49.7%" />
 </p>  
+
 Here, a **Phoneme Words CSV file** is being ingested into Snowflake. The left image displays the data pipeline configuration, and the right image verifies that the data has been successfully loaded into the database.  
 
 ---
@@ -157,6 +159,7 @@ Here, a **Phoneme Words CSV file** is being ingested into Snowflake. The left im
   <img src="https://github.com/user-attachments/assets/e08eae70-1b78-45df-b65b-05b8dd7fce1d" width="49.7%" />
   <img src="https://github.com/user-attachments/assets/72752864-6d45-4358-ab77-5410d181c2d2" width="49.7%" />
 </p>  
+
 The ingestion of an **Irregular Words CSV file** into Snowflake is demonstrated. The left-side image shows the ingestion workflow, while the right-side image confirms that the data has been properly ingested into the target table.  
 
 ---
@@ -166,6 +169,7 @@ The ingestion of an **Irregular Words CSV file** into Snowflake is demonstrated.
   <img src="https://github.com/user-attachments/assets/eeb89f85-ffcd-43a0-8ff1-ab34aad702e8" width="49.7%" />
   <img src="https://github.com/user-attachments/assets/121528d9-fb93-4991-8c4b-70daca4a8872" width="49.7%" />
 </p>  
+
 This step involves ingesting a **Multisyllable Words CSV file** into Snowflake. The first image highlights the ETL process, while the second image confirms that all records have been successfully inserted into the Snowflake table.  
 
 ---
@@ -175,6 +179,7 @@ This step involves ingesting a **Multisyllable Words CSV file** into Snowflake. 
   <img src="https://github.com/user-attachments/assets/b0b531e9-ae81-43f1-89d6-fe00de47eefe" width="49.7%" />
   <img src="https://github.com/user-attachments/assets/97bad476-20ba-49de-bf53-f0e79cce1c3e" width="49.7%" />
 </p>  
+
 Finally, a **Nonsensical Words CSV file** is ingested into Snowflake. The left image represents the data pipeline setup, while the right image displays the Snowflake table populated with the newly ingested data.  
 
 
