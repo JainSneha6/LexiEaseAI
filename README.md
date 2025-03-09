@@ -228,6 +228,8 @@ Key Features:
 - Scalable and optimized model execution for high performance  
 - Integration with existing data pipelines for seamless model deployment
 
+#### **Linear Regression Model to predict Fluency Rating**
+
 <div align="center">
   <img src="https://github.com/user-attachments/assets/c2b671f6-a097-4eaf-9c7f-80469ce8b51a" width="800">
 </div>
@@ -239,7 +241,19 @@ Key Features:
 - API-led and event-driven integration for real-time workflows  
 - Secure and reliable messaging for asynchronous communication  
 - Low-code/no-code integration tools for rapid development  
-- Scalable architecture for hybrid and multi-cloud environments  
+- Scalable architecture for hybrid and multi-cloud environments
+
+#### **1. AI Text To Text Chatbot Recipe**
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/0b7dbe16-6538-4c75-a5a2-0dc25d2e995d" width="1000">
+</div>
+
+#### **2. Prompt Chaining Mind Map Generation Recipe**
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/74b10d91-107d-4482-9774-5a3cbf75289d" width="1000">
+</div>
 
 ### **Application Integration Console**  
 Managing complex integrations across multiple applications requires visibility and control. Informatica’s Application Integration Console provides a centralized platform to monitor, manage, and troubleshoot integration workflows.  
