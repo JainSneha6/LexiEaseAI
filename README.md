@@ -140,32 +140,33 @@ Data ingestion is the first step in any data pipeline, enabling organizations to
 
 #### **1. Ingesting Reading Passages CSV into Snowflake Table**
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/e587c996-cb99-4104-b3e0-f62f825bd6fe" width="45%" />
-  <img src="https://github.com/user-attachments/assets/a21a414b-444d-46bf-830b-cd221c89abb3" width="45%" />
+  <img src="https://github.com/user-attachments/assets/e587c996-cb99-4104-b3e0-f62f825bd6fe" width="49.7%" />
+  <img src="https://github.com/user-attachments/assets/a21a414b-444d-46bf-830b-cd221c89abb3" width="49.7%" />
 </p>
+
 
 #### **2. Ingesting Phoneme Words CSV into Snowflake Table**
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/d9ee25b8-0dd5-4ae9-bf22-f9a6bb9f085f" width="45%" />
-  <img src="https://github.com/user-attachments/assets/01e06a17-7972-41d2-889e-a03a049beae8" width="45%" />
+  <img src="https://github.com/user-attachments/assets/d9ee25b8-0dd5-4ae9-bf22-f9a6bb9f085f" width="49.7%" />
+  <img src="https://github.com/user-attachments/assets/01e06a17-7972-41d2-889e-a03a049beae8" width="49.7%" />
 </p>
 
 #### **3. Ingesting Irregular Words CSV into Snowflake Table**
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/e08eae70-1b78-45df-b65b-05b8dd7fce1d" width="45%" />
-  <img src="https://github.com/user-attachments/assets/72752864-6d45-4358-ab77-5410d181c2d2" width="45%" />
+  <img src="https://github.com/user-attachments/assets/e08eae70-1b78-45df-b65b-05b8dd7fce1d" width="49.7%" />
+  <img src="https://github.com/user-attachments/assets/72752864-6d45-4358-ab77-5410d181c2d2" width="49.7%" />
 </p>
 
 #### **4. Ingesting Multisyallable Words CSV into Snowflake Table**
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/eeb89f85-ffcd-43a0-8ff1-ab34aad702e8" width="45%" />
-  <img src="https://github.com/user-attachments/assets/121528d9-fb93-4991-8c4b-70daca4a8872" width="45%" />
+  <img src="https://github.com/user-attachments/assets/eeb89f85-ffcd-43a0-8ff1-ab34aad702e8" width="49.7%" />
+  <img src="https://github.com/user-attachments/assets/121528d9-fb93-4991-8c4b-70daca4a8872" width="49.7%" />
 </p>
 
 #### **5. Ingesting Nonsensical Words CSV into Snowflake Table**
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/b0b531e9-ae81-43f1-89d6-fe00de47eefe" width="45%" />
-  <img src="https://github.com/user-attachments/assets/97bad476-20ba-49de-bf53-f0e79cce1c3e" width="45%" />
+  <img src="https://github.com/user-attachments/assets/b0b531e9-ae81-43f1-89d6-fe00de47eefe" width="49.7%" />
+  <img src="https://github.com/user-attachments/assets/97bad476-20ba-49de-bf53-f0e79cce1c3e" width="49.7%" />
 </p>
 
 
