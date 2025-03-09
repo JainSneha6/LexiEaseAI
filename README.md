@@ -71,12 +71,12 @@
 - Creating a text to text chatbot recipe using **Informatica's Application Integration**.
 - Creating an **App Connection** and **Process Object** for Gemini Model.
 - Using **Assignment** Node to create a prompt for the LLM to respond.
-- Using **Sevice** Node to connect to the **App Connection**
+- Using **Service** Node to connect to the **App Connection**
 - Using another **Assignment** Node to assign the final LLM Response.
 - Utilizing **Informatica's Application Integration Console** to get the REST API to integrate with our frontend.
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/d75dd984-9839-496d-91e8-4560cb3f5ea9" width="600">
+  <img src="https://github.com/user-attachments/assets/f381748f-5d2b-4b5f-b68c-b7d8a4d43b38" width="600">
 </div>
 
 
@@ -85,12 +85,12 @@
 - Creating a concise notes generation recipe using **Informatica's Application Integration**
 - Creating an **App Connection** and **Process Object** for Gemini Model.
 - Using **Assignment** Node to first extract the content from the file and then create a prompt for the LLM to respond.
-- Using **Sevice** Node to connect to the **App Connection**
+- Using **Service** Node to connect to the **App Connection**
 - Using another **Assignment** Node to assign the final LLM Response.
 - Utilizing **Informatica's Application Integration Console** to get the REST API to integrate with our frontend.
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/1c82cf0e-1426-4f57-a37b-38f308588a19" width="600">
+  <img src="https://github.com/user-attachments/assets/2bfde7eb-edea-4dd4-9bea-b5889a368b9a" width="600">
 </div>
 
 
@@ -99,20 +99,20 @@
 - Creating a prompt chaining mind map generation recipe using **Informatica's Application Integration**
 - Creating an **App Connection** and **Process Object** for Gemini Model.
 - Using **Assignment** Node to create a prompt for the LLM to respond.
-- Using **Sevice** Node to connect to the **App Connection**
+- Using **Service** Node to connect to the **App Connection**
 - Using another **Assignment** Node to assign the final LLM Response.
 - This prompt is further chained to get content for multiple nodes of mind map.
 - Utilizing **Informatica's Application Integration Console** to get the REST API to integrate with our frontend.
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/08dc2e3a-b477-4c01-aaf8-80ab02e62f29" width="600">
+  <img src="https://github.com/user-attachments/assets/313ed524-64c0-47bb-8b55-5a9de3a6e2ba" width="600">
 </div>
 
 ---
 
 ## **Informatica's Services**
 
-![image](https://github.com/user-attachments/assets/939fec98-9e7f-44f5-bce9-2e3fb635810a)
+![image](https://github.com/user-attachments/assets/91bc1eba-2848-4d75-b424-0cdcbe108b8a)
 
 ### **Data Ingestion**
 
