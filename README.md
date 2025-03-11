@@ -14,157 +14,6 @@
 
 ---
 
-## **What Problems Does LexiEase AI Solve?**
-
-1. **Limited Access to Dyslexia Screening**  
-   Many individuals with dyslexia struggle to get timely and affordable screenings, leading to delayed interventions and missed educational opportunities.
-
-2. **Lack of Personalized Learning Paths**  
-   Traditional learning resources are not tailored to the unique needs of dyslexic learners, making it harder for them to achieve their full potential in conventional educational settings.
-
-3. **Insufficient Support Tools for Dyslexic Learners**  
-   Dyslexic individuals often lack access to specialized tools, like writing assistants and document simplifiers, that can make reading and learning more accessible and enjoyable.
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/41df37ef-b19d-44c2-a87d-3d80c068fa6c" width="800">
-</div>
-
----
-
-## **List Of Features**
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/a48e2245-9911-4ff3-b6a6-57d4b171c2d1" width="800">
-</div>
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/c6be600b-8771-495d-9a81-269325103a36" width="800">
-</div>
-
-### **1. Dyslexic Screening Test**
-
-- **Phonological Awareness Test**
-  - Providing easy, medium and hard words from various CSVs of Phoneme, Irregular, Multisyllable and Nonsensical to check their phonological awareness.
-  - The CSVs are ingested to **Snowflake tables** using **Informatica's Data Ingestion**
-  - **Informatica's Data Profiling** is done to get Claire's insights on the data along with the null & distinct percentages.
-  - The words are provided to them in an audio format coverted using Google Text To Speech.
-  - The written word is checked against the audio word and a score is calculated.
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/f000c4ae-f281-4454-a12b-e20eb0bf8055" width="600">
-</div>
-
-- **Gray Oral Reading Test**
-  - Providing easy, medium and hard words from Reading Passages CSV.
-  - Data is ingested into **Snowflake tables** using **Informatica's Data Ingestion**.
-  - **Informatica's Data Profiling** is done to get Claire's insights on the data along with the null & distinct percentages.
-  - Rule Specifications and Cleansing of the data was done using **Informatica's Data Quality**
-  - Creating mappings of the data by using Data Quality Assets & Aggregates using **Informatica's Data Integration**.
-  - Linear Regression based model to calculate the fluency based on various parameters using **Informatica's Model Serve**
-  - A fluency rating is then provided to the user.
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/c674c08c-cecb-4e27-b234-23729834e6a6" width="600">
-</div>
-
----
-
-### **2. Personalized Learning Path**
-
-<div align="center">
-
-| **Level of Dyslexia**  | **Personalized Learning Path**  |
-|------------------------|--------------------------------|
-| **Mild**              | Reading Passages & Reading Comprehensions |
-| **Moderate**          | Reading Passages, Comprehensions & Memory Games |
-| **Severe**            | Reading Passages, Comprehensions, Memory Games & Phonological Games |
-
-</div>
-
----
-
-### **3. AI Chatbot**
-- Creating a text to text chatbot recipe using **Informatica's Application Integration**.
-- Creating an **App Connection** and **Process Object** for Gemini Model.
-- Using **Assignment** Node to create a prompt for the LLM to respond.
-- Using **Service** Node to connect to the **App Connection**
-- Using another **Assignment** Node to assign the final LLM Response.
-- Utilizing **Informatica's Application Integration Console** to get the REST API to integrate with our frontend.
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/957a6763-9b68-40d2-a2da-e539bf356f88" width="600">
-</div>
-
----
-
-### **4. Notes Generation**
-
-- Creating a concise notes generation recipe using **Informatica's Application Integration**
-- Creating an **App Connection** and **Process Object** for Gemini Model.
-- Using **Assignment** Node to first extract the content from the file and then create a prompt for the LLM to respond.
-- Using **Service** Node to connect to the **App Connection**
-- Using another **Assignment** Node to assign the final LLM Response.
-- Utilizing **Informatica's Application Integration Console** to get the REST API to integrate with our frontend.
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/9ad6f8ac-5220-45c8-b503-6ca95399f248" width="600">
-</div>
-
----
-
-
-### **5. Mind Map Generation**
-
-- Creating a prompt chaining mind map generation recipe using **Informatica's Application Integration**
-- Creating an **App Connection** and **Process Object** for Gemini Model.
-- Using **Assignment** Node to create a prompt for the LLM to respond.
-- Using **Service** Node to connect to the **App Connection**
-- Using another **Assignment** Node to assign the final LLM Response.
-- This prompt is further chained to get content for multiple nodes of mind map.
-- Utilizing **Informatica's Application Integration Console** to get the REST API to integrate with our frontend.
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/5e48308f-0925-476c-94ca-8cab05d1f502" width="600">
-</div>
-
----
-
-### **6. Chat with Document**
-
-- A **RAG-based recipe** for querying uploaded docs using **Informatica's Application Integration**.
-- **VectorMatchEntry Process Object** for matching vector entries.
-- **App Connections**: One to Gemini, another to Pinecone DB.
-
-#### **Base Process: Query LLM with Context Using Embeddings Model**
-1. Sets LLM models & calls **Generate Embeddings Model**.
-2. Sets context & query, then calls **Query LLM Gemini**.
-3. Outputs response with the required context.
-
-#### **Query LLM Gemini Process**
-- Uses **Assignment** Node for request.
-- Calls **Gemini App Connection** via **Service** Node.
-- Assigns LLM response using another **Assignment** Node.
-
-#### **Generate Embeddings Model Process**
-- Calls **Create Embedding Model** & **Pinecone Query** subprocesses.
-- Outputs matching vector metadata as context.
-
-#### **Pinecone Query Process**
-- Creates request via **Assignment** Node.
-- Calls **Pinecone App Connection** via **Service** Node.
-- Outputs matching vector embeddings.
-
-#### **Create Embedding Model Process**
-- Prepares embeddings request via **Assignment** Node.
-- Generates embeddings via **Gemini App Connection** using **Service** Node.
-- Sets embeddings via **Assignment** Node.
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/7db769c2-9f2d-4325-8291-5d42b23d7129" width="600">
-</div>
-
----
-
 ## **Informatica's Services**  
 
 <div align="center">
@@ -334,13 +183,161 @@ Key Features:
 - Real-time monitoring of application integration processes  
 - Proactive alerts and error handling for quick issue resolution  
 - Performance analytics and reporting for optimization  
-- Role-based access control for secure management  
+- Role-based access control for secure management
+  
+With Informatica’s powerful suite of services, businesses can ensure high-quality, integrated, and actionable data to drive decision-making, innovation, and operational efficiency. 
+
+--- 
+
+
+## **List Of Features**
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/a48e2245-9911-4ff3-b6a6-57d4b171c2d1" width="800">
+</div>
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/c6be600b-8771-495d-9a81-269325103a36" width="800">
+</div>
+
+### **1. Dyslexic Screening Test**
+
+- **Phonological Awareness Test**
+  - Providing easy, medium and hard words from various CSVs of Phoneme, Irregular, Multisyllable and Nonsensical to check their phonological awareness.
+  - The CSVs are ingested to **Snowflake tables** using **Informatica's Data Ingestion**
+  - **Informatica's Data Profiling** is done to get Claire's insights on the data along with the null & distinct percentages.
+  - The words are provided to them in an audio format coverted using Google Text To Speech.
+  - The written word is checked against the audio word and a score is calculated.
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/f000c4ae-f281-4454-a12b-e20eb0bf8055" width="600">
+</div>
+
+- **Gray Oral Reading Test**
+  - Providing easy, medium and hard words from Reading Passages CSV.
+  - Data is ingested into **Snowflake tables** using **Informatica's Data Ingestion**.
+  - **Informatica's Data Profiling** is done to get Claire's insights on the data along with the null & distinct percentages.
+  - Rule Specifications and Cleansing of the data was done using **Informatica's Data Quality**
+  - Creating mappings of the data by using Data Quality Assets & Aggregates using **Informatica's Data Integration**.
+  - Linear Regression based model to calculate the fluency based on various parameters using **Informatica's Model Serve**
+  - A fluency rating is then provided to the user.
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/c674c08c-cecb-4e27-b234-23729834e6a6" width="600">
+</div>
 
 ---
 
-With Informatica’s powerful suite of services, businesses can ensure high-quality, integrated, and actionable data to drive decision-making, innovation, and operational efficiency.  
+### **2. Personalized Learning Path**
+
+<div align="center">
+
+| **Level of Dyslexia**  | **Personalized Learning Path**  |
+|------------------------|--------------------------------|
+| **Mild**              | Reading Passages & Reading Comprehensions |
+| **Moderate**          | Reading Passages, Comprehensions & Memory Games |
+| **Severe**            | Reading Passages, Comprehensions, Memory Games & Phonological Games |
+
+</div>
+
+---
+
+### **3. AI Chatbot**
+- Creating a text to text chatbot recipe using **Informatica's Application Integration**.
+- Creating an **App Connection** and **Process Object** for Gemini Model.
+- Using **Assignment** Node to create a prompt for the LLM to respond.
+- Using **Service** Node to connect to the **App Connection**
+- Using another **Assignment** Node to assign the final LLM Response.
+- Utilizing **Informatica's Application Integration Console** to get the REST API to integrate with our frontend.
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/957a6763-9b68-40d2-a2da-e539bf356f88" width="600">
+</div>
+
+---
+
+### **4. Notes Generation**
+
+- Creating a concise notes generation recipe using **Informatica's Application Integration**
+- Creating an **App Connection** and **Process Object** for Gemini Model.
+- Using **Assignment** Node to first extract the content from the file and then create a prompt for the LLM to respond.
+- Using **Service** Node to connect to the **App Connection**
+- Using another **Assignment** Node to assign the final LLM Response.
+- Utilizing **Informatica's Application Integration Console** to get the REST API to integrate with our frontend.
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/9ad6f8ac-5220-45c8-b503-6ca95399f248" width="600">
+</div>
+
+---
 
 
+### **5. Mind Map Generation**
+
+- Creating a prompt chaining mind map generation recipe using **Informatica's Application Integration**
+- Creating an **App Connection** and **Process Object** for Gemini Model.
+- Using **Assignment** Node to create a prompt for the LLM to respond.
+- Using **Service** Node to connect to the **App Connection**
+- Using another **Assignment** Node to assign the final LLM Response.
+- This prompt is further chained to get content for multiple nodes of mind map.
+- Utilizing **Informatica's Application Integration Console** to get the REST API to integrate with our frontend.
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/5e48308f-0925-476c-94ca-8cab05d1f502" width="600">
+</div>
+
+---
+
+### **6. Chat with Document**
+
+- A **RAG-based recipe** for querying uploaded docs using **Informatica's Application Integration**.
+- **VectorMatchEntry Process Object** for matching vector entries.
+- **App Connections**: One to Gemini, another to Pinecone DB.
+
+#### **Base Process: Query LLM with Context Using Embeddings Model**
+1. Sets LLM models & calls **Generate Embeddings Model**.
+2. Sets context & query, then calls **Query LLM Gemini**.
+3. Outputs response with the required context.
+
+#### **Query LLM Gemini Process**
+- Uses **Assignment** Node for request.
+- Calls **Gemini App Connection** via **Service** Node.
+- Assigns LLM response using another **Assignment** Node.
+
+#### **Generate Embeddings Model Process**
+- Calls **Create Embedding Model** & **Pinecone Query** subprocesses.
+- Outputs matching vector metadata as context.
+
+#### **Pinecone Query Process**
+- Creates request via **Assignment** Node.
+- Calls **Pinecone App Connection** via **Service** Node.
+- Outputs matching vector embeddings.
+
+#### **Create Embedding Model Process**
+- Prepares embeddings request via **Assignment** Node.
+- Generates embeddings via **Gemini App Connection** using **Service** Node.
+- Sets embeddings via **Assignment** Node.
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/7db769c2-9f2d-4325-8291-5d42b23d7129" width="600">
+</div>
+
+---
+
+## **What Problems Does LexiEase AI Solve?**
+
+1. **Limited Access to Dyslexia Screening**  
+   Many individuals with dyslexia struggle to get timely and affordable screenings, leading to delayed interventions and missed educational opportunities.
+
+2. **Lack of Personalized Learning Paths**  
+   Traditional learning resources are not tailored to the unique needs of dyslexic learners, making it harder for them to achieve their full potential in conventional educational settings.
+
+3. **Insufficient Support Tools for Dyslexic Learners**  
+   Dyslexic individuals often lack access to specialized tools, like writing assistants and document simplifiers, that can make reading and learning more accessible and enjoyable.
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/41df37ef-b19d-44c2-a87d-3d80c068fa6c" width="800">
+</div>
 
 
 ## **Impact and Benefits for Users**
