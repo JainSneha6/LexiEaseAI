@@ -14,6 +14,12 @@
 
 ---
 
+## **Architecture Diagram**
+
+![FinalInformaticaDiagram drawio (1)](https://github.com/user-attachments/assets/bf7e6eff-b790-485d-9718-e51d4ab0feb4)
+
+---
+
 ## **Informatica's Services**  
 
 <div align="center">
