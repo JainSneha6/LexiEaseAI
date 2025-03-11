@@ -126,11 +126,11 @@ The second image shows the **rule specification stage**, where custom validation
 ### **Data Integration**  
 Organizations deal with vast amounts of data from various sources, making seamless integration a necessity. Informatica's data integration solutions enable real-time and batch processing of data across on-premises, cloud, and hybrid environments.  
 
-Key Features:  
-- Support for ETL (Extract, Transform, Load) and ELT (Extract, Load, Transform)  
-- Scalable data pipelines with high-performance processing  
-- Pre-built connectors for cloud applications, databases, and APIs  
-- Real-time streaming and batch data integration capabilities
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/4561de1b-f513-485a-969f-1110599d30f3" width="800">
+</div>  
+
+This image shows an Informatica Data Integration mapping workflow. It starts with a Source, passes through Cleansing, Rule Specification, and Aggregation, and finally loads into a Target. The mapping is valid, meaning it is correctly configured and ready to run.
 
 ---
 
@@ -176,14 +176,34 @@ The second image demonstrates a **Prompt Chaining Mind Map Generation** workflow
 
 ---
 
+#### **3. Notes Generation Recipe**  
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/b7d1e3fd-0d8d-40f8-8029-3cd680934355" width="1000">
+</div>  
+
+The third image shows a **Notes Generation** workflow, which is valid and ready for publishing. The workflow starts by extracting content, then creating a prompt, followed by generating content, and finally returning an LLM response. 
+
+---
+
+#### **4. Chat With Document Recipe**  
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/8573aac4-6078-4033-aa0a-3e398aba903e" width="1000">
+</div>  
+
+The fourth image shows a **Chat With Document** workflow, which is valid and ready for publishing. The workflow sets up LLM models, generates embeddings, prepares a request with context, queries Gemini LLM, and stores the response. This setup enhances LLM responses by incorporating contextual embeddings for better query understanding.  
+
+---
+
 ### **Application Integration Console**  
 Managing complex integrations across multiple applications requires visibility and control. Informatica’s Application Integration Console provides a centralized platform to monitor, manage, and troubleshoot integration workflows.  
 
-Key Features:  
-- Real-time monitoring of application integration processes  
-- Proactive alerts and error handling for quick issue resolution  
-- Performance analytics and reporting for optimization  
-- Role-based access control for secure management
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/ded67bf6-cf19-42c4-9022-601381abe14b" width="1000">
+</div>  
+
+This image shows the Informatica Application Integration Console under the APIs section, listing various active REST and SOAP service endpoints. The APIs include LLM-related services, such as embeddings generation, Gemini-based queries, and Pinecone integration for vector storage. The page allows users to activate or deactivate APIs and monitor their status.
   
 With Informatica’s powerful suite of services, businesses can ensure high-quality, integrated, and actionable data to drive decision-making, innovation, and operational efficiency. 
 
