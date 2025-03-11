@@ -33,8 +33,6 @@ Data ingestion is the first step in any data pipeline, enabling organizations to
 
 The process starts by ingesting a **Reading Passages CSV file** into a Snowflake table. The first image shows the ingestion pipeline setup, while the second image confirms the successful data load into Snowflake.  
 
----
-
 #### **2. Ingesting Phoneme Words CSV into Snowflake Table**  
 <p align="center">
   <img src="https://github.com/user-attachments/assets/d9ee25b8-0dd5-4ae9-bf22-f9a6bb9f085f" width="49.7%" />
@@ -42,8 +40,6 @@ The process starts by ingesting a **Reading Passages CSV file** into a Snowflake
 </p>  
 
 Here, a **Phoneme Words CSV file** is being ingested into Snowflake. The left image displays the data pipeline configuration, and the right image verifies that the data has been successfully loaded into the database.  
-
----
 
 #### **3. Ingesting Irregular Words CSV into Snowflake Table**  
 <p align="center">
@@ -53,8 +49,6 @@ Here, a **Phoneme Words CSV file** is being ingested into Snowflake. The left im
 
 The ingestion of an **Irregular Words CSV file** into Snowflake is demonstrated. The left-side image shows the ingestion workflow, while the right-side image confirms that the data has been properly ingested into the target table.  
 
----
-
 #### **4. Ingesting Multisyllable Words CSV into Snowflake Table**  
 <p align="center">
   <img src="https://github.com/user-attachments/assets/eeb89f85-ffcd-43a0-8ff1-ab34aad702e8" width="49.7%" />
@@ -62,8 +56,6 @@ The ingestion of an **Irregular Words CSV file** into Snowflake is demonstrated.
 </p>  
 
 This step involves ingesting a **Multisyllable Words CSV file** into Snowflake. The first image highlights the ETL process, while the second image confirms that all records have been successfully inserted into the Snowflake table.  
-
----
 
 #### **5. Ingesting Nonsensical Words CSV into Snowflake Table**  
 <p align="center">
@@ -78,8 +70,6 @@ Finally, a **Nonsensical Words CSV file** is ingested into Snowflake. The left i
 ### **Data Profiling**  
 Understanding the quality, structure, and relationships within your data is critical before analysis and integration. Informatica’s data profiling tools provide deep insights into data patterns, completeness, accuracy, and potential inconsistencies.  
 
----
-
 #### **Performing Data Profiling on Reading Passages CSV**  
 
 <div align="center">
@@ -87,8 +77,6 @@ Understanding the quality, structure, and relationships within your data is crit
 </div>  
 
 The first image displays the **initial data profiling process** for the Reading Passages CSV file. Here, Informatica scans the dataset to analyze column structure, data types, and overall completeness. It helps identify any anomalies, such as missing values, duplicates, or unexpected data formats.  
-
----
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/59e2fa3c-2be6-4e87-9d71-691b3913fc0a" width="800">
@@ -101,8 +89,6 @@ The second image presents the **detailed profiling results**, highlighting key s
 ### **Data Quality**  
 Ensuring high-quality data is essential for analytics, reporting, and compliance. Informatica's data quality solutions cleanse, standardize, and enrich data to improve accuracy, completeness, and reliability.  
 
----
-
 #### **Cleansing Reading Passages CSV**  
 
 <div align="center">
@@ -110,8 +96,6 @@ Ensuring high-quality data is essential for analytics, reporting, and compliance
 </div>  
 
 The first image illustrates the **data cleansing process** for the Reading Passages CSV file. Informatica applies transformation rules to detect and fix inconsistencies such as missing values, incorrect formatting, and invalid entries. This step ensures that the dataset is accurate and structured before further processing.  
-
----
 
 #### **Rule Specification for Reading Passages CSV**  
 
@@ -137,7 +121,6 @@ This image shows an Informatica Data Integration mapping workflow. It starts wit
 ### **Model Serve**  
 Informatica’s Model Serve simplifies the deployment and management of machine learning models at scale. It ensures that AI-driven insights are seamlessly integrated into business applications and workflows for predictive analytics and automation.  
 
----
 
 #### **Linear Regression Model to Predict Fluency Rating**  
 
@@ -154,7 +137,6 @@ Informatica’s Model Serve allows seamless deployment of this machine learning 
 ### **Application Integration**  
 Modern enterprises rely on multiple applications to drive business operations. Informatica’s application integration services enable seamless connectivity between applications, APIs, and services across diverse environments.  
 
----
 
 #### **1. AI Text-to-Text Chatbot Recipe**  
 
@@ -164,8 +146,6 @@ Modern enterprises rely on multiple applications to drive business operations. I
 
 The first image illustrates an **AI-powered Text-to-Text Chatbot integration** using Informatica’s application integration services. This chatbot leverages APIs and workflow automation to process user queries, generate responses, and facilitate seamless conversational AI experiences. The integration ensures real-time interactions while maintaining high reliability and security.  
 
----
-
 #### **2. Prompt Chaining Mind Map Generation Recipe**  
 
 <div align="center">
@@ -173,8 +153,6 @@ The first image illustrates an **AI-powered Text-to-Text Chatbot integration** u
 </div>  
 
 The second image demonstrates a **Prompt Chaining Mind Map Generation** workflow. This setup allows multiple AI-generated responses to be linked together in a structured way, creating a mind map representation of ideas. By integrating different AI models and APIs, Informatica enables dynamic and automated content generation to enhance brainstorming, research, and decision-making processes.  
-
----
 
 #### **3. Notes Generation Recipe**  
 
@@ -184,7 +162,6 @@ The second image demonstrates a **Prompt Chaining Mind Map Generation** workflow
 
 The third image shows a **Notes Generation** workflow, which is valid and ready for publishing. The workflow starts by extracting content, then creating a prompt, followed by generating content, and finally returning an LLM response. 
 
----
 
 #### **4. Chat With Document Recipe**  
 
