@@ -10,12 +10,6 @@ const tests = [
     icon: <FaSoundcloud className="text-blue-700 text-5xl" />,
   },
   {
-    title: 'Kauffman Assessment Battery Test',
-    description: 'A comprehensive assessment used to evaluate memory and cognitive abilities, helping identify learning differences.',
-    link: '/kauffman-memory-test',
-    icon: <FaBrain className="text-green-700 text-5xl" />,
-  },
-  {
     title: 'Gray Oral Reading Test',
     description: 'A standardized test used to measure reading fluency and comprehension skills in individuals.',
     link: '/gray-oral-reading',
