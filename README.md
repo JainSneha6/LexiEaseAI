@@ -23,8 +23,6 @@
 ### **Data Ingestion**  
 Data ingestion is the first step in any data pipeline, enabling organizations to collect, import, and transfer data from diverse sources into a centralized system. Informatica provides seamless ingestion from databases, cloud storage, IoT devices, APIs, and streaming platforms. With support for batch and real-time processing, users can efficiently extract data while maintaining high performance and scalability.  
 
----
-
 #### **1. Ingesting Reading Passages CSV into Snowflake Table**  
 <p align="center">
   <img src="https://github.com/user-attachments/assets/e587c996-cb99-4104-b3e0-f62f825bd6fe" width="49.7%" />
