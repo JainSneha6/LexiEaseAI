@@ -131,7 +131,7 @@
 
 ### **6. Chat with Document**
 
-- Creating a RAG based recipe for asking questions related to uploaded documents using **Informatica's Application Integration**
+- Creating a RAG based recipe for asking queries related to uploaded documents using **Informatica's Application Integration**
 - Creating a **VectorMatchEntry Process Object** for matching the vector entries.
 - Creating an **App Connection** to Gemini & another **App Connection** to the Pinecone DB.
 - Creating the base process **Query LLM with Context Using Embeddings Model** that
