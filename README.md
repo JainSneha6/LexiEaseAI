@@ -112,6 +112,7 @@
 
 ---
 
+
 ### **5. Mind Map Generation**
 
 - Creating a prompt chaining mind map generation recipe using **Informatica's Application Integration**
@@ -124,6 +125,23 @@
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/5e48308f-0925-476c-94ca-8cab05d1f502" width="600">
+</div>
+
+---
+
+### **6. Chat with Document**
+
+- Creating a RAG based recipe for asking questions related to uploaded documents using **Informatica's Application Integration**
+- Creating a **VectorMatchEntry Process Object** for matching the vector entries.
+- Creating an **App Connection** to Gemini & another **App Connection** to the Pinecone DB.
+- Creating the base process **Query LLM with Context Using Embeddings Model** that first sets the LLM models, then calls the **Generate Embeddings Model** subprocess, then sets the context & query for the LLM model and calls the **Query LLM Gemini** subprocess that finally outputs the response taking into consideration the required context.
+- Creating the **Query LLM Gemini** process that first assigns the request using an **Assignment** Node, then uses a **Service** node to connect to the **Gemini App Connection** & finally assigns the LLM response using another **Assignment** Node.
+- Creating the **Generate Embeddings Model** process that first calls the **Create Embedding Model** subprocess, followed by the **Pinecone Query** subprocess and finally outputs the context in the form of metadata of the matching vectors.
+- Creating the **Pinecone Query** process that first creates the request using an **Assignment** Node, then uses a **Service** Node to connect to the **Pinecone App Connection** and finally outputs the matching vector embeddings using a final **Assignment** Node.
+- Creating the **Create Embedding Model** process that prepares the embeddings request using an **Assignment** Node, then uses a **Service** Node to generate embeddings using the **Gemini App Connection** and finally setting the embeddings using an **Assignment** Node.
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/7db769c2-9f2d-4325-8291-5d42b23d7129" width="600">
 </div>
 
 ---
