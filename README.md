@@ -20,10 +20,16 @@
 
 ---
 
+## **Flow Diagram**
+
+![image](https://github.com/user-attachments/assets/3ce4f0cd-34f2-424b-bb41-053670830385)
+
+---
+
 ## **Informatica's Services**  
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/91bc1eba-2848-4d75-b424-0cdcbe108b8a" width="800">
+  <img src="https://github.com/user-attachments/assets/8bc7853e-f1d5-4046-8d3d-7fb27c3d66cf" width="800">
 </div>
 
 ### **Data Ingestion**  
@@ -190,7 +196,6 @@ With Informatica’s powerful suite of services, businesses can ensure high-qual
 
 --- 
 
-
 ## **List Of Features**
 
 <div align="center">
@@ -325,6 +330,12 @@ With Informatica’s powerful suite of services, businesses can ensure high-qual
 
 ---
 
+## **Tech Stack**
+
+![image](https://github.com/user-attachments/assets/15a1ccbe-07a9-445a-a357-cea0a2b662ad)
+
+---
+
 ## **What Problems Does LexiEase AI Solve?**
 
 1. **Limited Access to Dyslexia Screening**  
@@ -340,6 +351,7 @@ With Informatica’s powerful suite of services, businesses can ensure high-qual
   <img src="https://github.com/user-attachments/assets/41df37ef-b19d-44c2-a87d-3d80c068fa6c" width="800">
 </div>
 
+---
 
 ## **Impact and Benefits for Users**
 
@@ -352,7 +364,7 @@ With Informatica’s powerful suite of services, businesses can ensure high-qual
 | **Time and Cost Efficiency**                 | Reduces dependency on third-party intervention, enabling users to access resources independently and at a lower cost. |
 
 
-
+---
 
 ## **Business Relevance & Adoption Model**
 
@@ -365,6 +377,8 @@ LexiEase AI provides a comprehensive solution that can be seamlessly integrated 
 | **Educational Institutions**   | Schools and universities can adopt LexiEase AI to support dyslexic students with tailored learning aids, enhancing student engagement and performance.          |
 | **Corporates & Employers**     | Implement LexiEase AI within corporate learning management systems to ensure inclusive training resources for employees with dyslexia, fostering diversity.    |
 | **Non-Profits & NGOs**         | Leverage LexiEase AI to support initiatives aimed at learning disabilities, increasing outreach effectiveness and empowering communities with dyslexia.       |
+
+---
 
 ## **Why Businesses Should Integrate LexiEase AI**
 1. **Boost Corporate Social Responsibility (CSR)**: By supporting dyslexic individuals, businesses can demonstrate their commitment to inclusivity and accessibility.
