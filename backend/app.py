@@ -9,7 +9,7 @@ import google.generativeai as genai
 import re
 import traceback
 
-API_KEY = "AIzaSyC6iqFmmBrHeAzOu4VSgO7SYCkNtmwCZM8"
+API_KEY = "AIzaSyC6X83C-yPa-KYJnajVxPIYvisYOcQcqmc"
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
@@ -176,7 +176,7 @@ def upload_pdf_notes():
 def generate_notes(text):
     print(text)
     prompt = (
-        "Generate proper notes from the text provided.:\n"
+        "Generate proper notes in a brief manner from the text provided.:\n"
         f"'{text}'"
     )
     try:
@@ -189,7 +189,7 @@ def generate_notes(text):
     
 def extract_key_points_from_gemini(text):
     prompt = (
-        "Provide 5 consice points to create a mindmap in the form of an array:\n"
+        "Provide 3 consice points to create a mindmap in the form of an array:\n"
         f"'{text}'"
     )
     try:

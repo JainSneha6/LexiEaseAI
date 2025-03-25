@@ -11,11 +11,11 @@ const GrayOralReadingTest = () => {
   const [readingTime, setReadingTime] = useState(0);
   const [isTestCompleted, setIsTestCompleted] = useState(false);
   const [readingSpeed, setReadingSpeed] = useState(0);
-  const [fluencyRating, setFluencyRating] = useState(null); 
+  const [fluencyRating, setFluencyRating] = useState(null);
   const [startTime, setStartTime] = useState(null);
 
   const passage =
-    'The sun is bright in the sky. Birds fly high and sing sweet songs. Trees sway gently in the wind. Grass is green and soft underfoot. Children laugh and play outside. They run, jump, and chase each other. A dog wags its tail and joins the fun. Everyone enjoys this nice day. Nature is full of life and happiness.';
+    'The sun is bright in the sky. Birds fly high and sing sweet songs. Trees sway gently in the wind.';
 
   const handleStartReading = async () => {
     setIsReading(true);
@@ -69,7 +69,7 @@ const GrayOralReadingTest = () => {
   };
 
   const saveResultsToBackend = async (speed, timeTaken) => {
-    
+
 
     try {
       await axios.post(
@@ -98,7 +98,7 @@ const GrayOralReadingTest = () => {
         },
       });
 
-      setFluencyRating(response.data.fluency_rating); 
+      setFluencyRating(response.data.fluency_rating);
       toast.success('Audio uploaded successfully!');
     } catch (error) {
       console.error('Error uploading audio:', error.response ? error.response.data : error.message);
@@ -111,7 +111,7 @@ const GrayOralReadingTest = () => {
       saveResultsToBackend(readingSpeed, readingTime);
       uploadAudioToBackend();
     }
-  }, [isTestCompleted, audioBlob]); 
+  }, [isTestCompleted, audioBlob]);
 
   return (
     <div className="bg-gradient-to-r from-green-200 via-blue-200 to-purple-200 min-h-screen p-8 flex flex-col items-center" style={{ fontFamily: 'OpenDyslexic', lineHeight: '1.5' }}>

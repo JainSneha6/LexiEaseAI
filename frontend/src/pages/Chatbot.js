@@ -101,26 +101,6 @@ const Chatbot = () => {
             ></textarea>
 
             <div className="absolute right-4 flex items-center space-x-3">
-              <label className="cursor-pointer text-purple-500 hover:text-purple-700">
-                <FaFileImage size={24} />
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => handleFileChange(e, setImage)}
-                  className="hidden"
-                />
-              </label>
-
-              {!isRecording ? (
-                <button onClick={startRecording} className="text-green-500 hover:text-green-700">
-                  <FaMicrophone size={24} />
-                </button>
-              ) : (
-                <button onClick={stopRecording} className="text-red-500 hover:text-red-700">
-                  <FaStop size={24} />
-                </button>
-              )}
-
               <button onClick={handleSubmit} className="text-blue-500 hover:text-blue-700">
                 <FaPaperPlane size={24} />
               </button>

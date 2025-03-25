@@ -4,8 +4,8 @@ import { FaFileAlt, FaProjectDiagram } from 'react-icons/fa'; // Icons for the c
 
 const services = [
     {
-        title: 'Document Simplifier',
-        description: 'Effortlessly convert complex PDF documents into simplified, easy-to-understand text.',
+        title: 'AI Powered RAG based Chat with Document',
+        description: 'Effortlessly chat with complex PDF documents using RAGs',
         link: '/document-simplifier',
         icon: <FaFileAlt className="text-blue-700 text-5xl" />,
     },
