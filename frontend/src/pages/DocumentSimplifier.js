@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist/build/pdf';
-import { jsPDF } from 'jspdf';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${'2.13.216'}/pdf.worker.min.js`;
+GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.13.216/pdf.worker.min.js`;
 
 const DocumentSimplifier = () => {
     const [selectedFile, setSelectedFile] = useState(null);
-    const [simplifiedText, setSimplifiedText] = useState('');
-    const [importantWords, setImportantWords] = useState([]);
-    const [loadingText, setLoadingText] = useState(false);
+    const [pineconeMessage, setPineconeMessage] = useState('');
+    const [queryAnswer, setQueryAnswer] = useState('');
+    const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
-    const [customText, setCustomText] = useState('');
+    const [customQuery, setCustomQuery] = useState('');
+    const [isPineconeFilled, setIsPineconeFilled] = useState(false);
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-            console.log('Selected file:', file);
             setSelectedFile(file);
             setMessage('');
         } else {
@@ -30,126 +29,103 @@ const DocumentSimplifier = () => {
         const pdfData = await file.arrayBuffer();
         const pdfDoc = await getDocument({ data: pdfData }).promise;
         let text = '';
-
         for (let i = 1; i <= pdfDoc.numPages; i++) {
             const page = await pdfDoc.getPage(i);
             const textContent = await page.getTextContent();
             const pageText = textContent.items.map(item => item.str).join(' ');
             text += pageText + '\n';
         }
-
         return text.trim();
     };
 
-    const handleUpload = async () => {
+    const handleFillPinecone = async () => {
         if (!selectedFile) {
             setMessage('Please select a file to upload.');
             return;
         }
-
+        setLoading(true);
         try {
-            setLoadingText(true);
             const extractedText = await extractTextFromPDF(selectedFile);
-            console.log('Extracted text:', extractedText);
+            const formData = new FormData();
+            formData.append('document_text', extractedText);
 
-            const dataToSend = {
-                content: extractedText,
-                customText: customText
-            };
-
-            const response = await axios.post('http://localhost:5000/api/upload-pdf', dataToSend, {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+            const response = await axios.post('http://localhost:5000/api/fill-pinecone', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' },
             });
-            setSimplifiedText(response.data.simplified_text);
-            setImportantWords(response.data.important_words);
-            setMessage('PDF uploaded and simplified successfully!');
+            setPineconeMessage(JSON.stringify(response.data));
+            setMessage('Pinecone index filled successfully!');
+            setIsPineconeFilled(true);
         } catch (error) {
-            console.error('Error uploading the PDF:', error.response ? error.response.data : error.message);
-            setMessage('Error uploading the PDF! ' + (error.response ? error.response.data.message : error.message));
+            setMessage('Error filling Pinecone index: ' + (error.response ? error.response.data.message : error.message));
         }
-        setLoadingText(false);
+        setLoading(false);
     };
 
-    const handleDownloadPDF = () => {
-        if (!simplifiedText) {
-            setMessage('No simplified text to download.');
+    const handleQueryLLM = async () => {
+        if (!customQuery) {
+            setMessage('Please enter a query.');
             return;
         }
-
-        const doc = new jsPDF();
-
-        doc.setFontSize(12);
-
-        const lines = doc.splitTextToSize(simplifiedText, 190);
-
-        let yPosition = 10;
-        const lineHeight = 10;
-
-        lines.forEach((line) => {
-            if (yPosition + lineHeight > doc.internal.pageSize.height - 10) {
-                doc.addPage();
-                yPosition = 10;
-            }
-            doc.text(line, 10, yPosition);
-            yPosition += lineHeight;
-        });
-
-        doc.save('simplified_text.pdf');
-    };
-
-    const highlightImportantWords = (text, importantWords) => {
-        let highlightedText = text;
-        importantWords.forEach(word => {
-            const regex = new RegExp(`(${word})`, 'gi');
-            highlightedText = highlightedText.replace(regex, '<mark>$1</mark>');
-        });
-        return highlightedText;
+        setLoading(true);
+        try {
+            const payload = {
+                Query: customQuery
+            };
+            const response = await axios.post('http://localhost:5000/api/query-llm', payload, {
+                headers: { 'Content-Type': 'application/json' },
+            });
+            setQueryAnswer(response.data.Response);
+            setMessage('Query answered successfully!');
+        } catch (error) {
+            setMessage('Error processing your query: ' + (error.response ? error.response.data.message : error.message));
+        }
+        setLoading(false);
     };
 
     return (
         <div className="bg-gradient-to-r from-green-200 via-blue-200 to-purple-200 min-h-screen p-8 flex flex-col items-center" style={{ fontFamily: 'OpenDyslexic', lineHeight: '1.5' }}>
             <ToastContainer />
             <h1 className="text-4xl font-bold mb-8 text-blue-800 text-center">AI Powered RAG based Chat with Document</h1>
-
-            <div className="mb-4 w-full max-w-md">
-                <input
-                    type="file"
-                    name='file'
-                    accept=".pdf"
-                    onChange={handleFileChange}
-                    className="block w-full border border-gray-300 rounded-md p-2 mb-4"
-                />
-                <input
-                    type="text"
-                    placeholder="What's in your mind?"
-                    value={customText}
-                    onChange={(e) => setCustomText(e.target.value)}
-                    className="block w-full border border-gray-300 rounded-md p-2 mt-2 text-center shadow-md"
-                />
-            </div>
-
-            <button
-                className="bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 px-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
-                onClick={handleUpload}
-            >
-                {loadingText ? 'Loading ...' : 'Upload PDF'}
-            </button>
-
-            {message && <p className="mt-4 text-red-600">{message}</p>}
-
-            {simplifiedText && (
-                <div className="mt-4 bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl">
-                    <h2 className="text-xl font-bold">Simplified Text:</h2>
-                    <p className="mt-2 whitespace-pre-wrap text-gray-700" dangerouslySetInnerHTML={{ __html: highlightImportantWords(simplifiedText, importantWords) }} />
-
+            {!isPineconeFilled && (
+                <div className="mb-4 w-full max-w-md">
+                    <input
+                        type="file"
+                        name="file"
+                        accept=".pdf"
+                        onChange={handleFileChange}
+                        className="block w-full border border-gray-300 rounded-md p-2 mb-4"
+                    />
                     <button
-                        className="bg-green-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-green-600 transition duration-300 ease-in-out"
-                        onClick={handleDownloadPDF}
+                        className="bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 px-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
+                        onClick={handleFillPinecone}
                     >
-                        Download Simplified PDF
+                        {loading ? 'Processing...' : 'Fill Pinecone Index'}
                     </button>
+                </div>
+            )}
+            {isPineconeFilled && (
+                <div className="mb-4 w-full max-w-md">
+                    <p className="mb-4">Pinecone index filled successfully! You may now enter your query:</p>
+                    <input
+                        type="text"
+                        placeholder="Enter your query here..."
+                        value={customQuery}
+                        onChange={(e) => setCustomQuery(e.target.value)}
+                        className="block w-full border border-gray-300 rounded-md p-2 mt-2 text-center shadow-md"
+                    />
+                    <button
+                        className="bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 px-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out mt-4"
+                        onClick={handleQueryLLM}
+                    >
+                        {loading ? 'Processing...' : 'Submit Query'}
+                    </button>
+                </div>
+            )}
+            {message && <p className="mt-4 text-red-600">{message}</p>}
+            {queryAnswer && (
+                <div className="mt-4 bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl">
+                    <h2 className="text-xl font-bold">Query Answer:</h2>
+                    <p className="mt-2 whitespace-pre-wrap text-gray-700">{queryAnswer}</p>
                 </div>
             )}
         </div>

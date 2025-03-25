@@ -1,13 +1,14 @@
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import JWTManager, create_access_token
 import os
 import google.generativeai as genai
 import re
 import traceback
+import requests
 
 API_KEY = "AIzaSyC6X83C-yPa-KYJnajVxPIYvisYOcQcqmc"
 genai.configure(api_key=API_KEY)
@@ -23,6 +24,10 @@ jwt = JWTManager(app)
 
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+INFORMATICA_URL_CHATBOT = "https://usw5-cai.dm-us.informaticacloud.com/active-bpel/public/rt/9VCedj3QY7Lc198InmXVkW/DyslexiaTextChatbot"
+INFORMATICA_URL_RAGS = "https://usw5-cai.dm-us.informaticacloud.com/active-bpel/public/rt/9VCedj3QY7Lc198InmXVkW/Query_LLM_With_Context_Using_Embeddings_Model"
+INFORMATICA_FILL_PINECONE_URL = "https://usw5-cai.dm-us.informaticacloud.com/active-bpel/public/rt/9VCedj3QY7Lc198InmXVkW/Fill_Empty_Pinecone_Index_Using_Gemini_AI"
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -50,6 +55,87 @@ def login():
         access_token = create_access_token(identity=user.id)
         return jsonify(message='Login successful!', access_token=access_token), 200
     return jsonify(message='Invalid email or password!'), 401
+
+@app.route('/api/ask', methods=['POST'])
+def ask():
+    user_prompt = request.form.get('text')
+    if not user_prompt:
+        return jsonify({'message': 'Missing text in request'}), 400
+
+    payload = {'user_prompt': user_prompt}
+    
+    print(payload)
+
+    try:
+        response = requests.post(INFORMATICA_URL_CHATBOT, data=payload)
+        
+        print(response)
+        
+        if response.status_code != 200:
+            return jsonify({'message': 'Error from Informatica endpoint', 'status': response.status_code}), 500
+
+        answer = response.json().get('LLM_Answer', 'No response field found')
+        return jsonify({'response': answer})
+    except Exception as e:
+        print("Error proxying request:", str(e))
+        return jsonify({'message': 'Error processing your request'}), 500
+    
+@app.route('/api/fill-pinecone', methods=['POST'])
+def fill_pinecone():
+    document_text = request.form.get('document_text')
+    if not document_text:
+        return jsonify({'message': 'Missing document_text in request'}), 400
+
+    payload = {
+        "Input": document_text,
+        "Output_Dimensionality": "768",
+        "Model": "text-embedding-004",
+        "Index_Host": "lexieaseai-c5gq0hp.svc.aped-4627-b74a.pinecone.io"
+    }
+    
+    try:
+        response = requests.post(INFORMATICA_FILL_PINECONE_URL, json=payload)
+        
+        if response.status_code != 200:
+            return jsonify({
+                'message': 'Error from Informatica endpoint', 
+                'status': response.status_code,
+                'details': response.text
+            }), 500
+
+        return jsonify(response.json()), 200
+    except Exception as e:
+        return jsonify({'message': 'Error processing your request', 'error': str(e)}), 500
+    
+@app.route('/api/query-llm', methods=['POST'])
+def query_llm():
+    data = request.get_json()
+    if not data or 'Query' not in data:
+        return jsonify({'message': 'Missing Query in request body'}), 400
+
+    query = data.get('Query')
+
+    payload = {
+        "Query": query,
+        "TopK": "2",
+        "Score_Cuttoff": "0.5",
+        "Index_Host": "lexieaseai-c5gq0hp.svc.aped-4627-b74a.pinecone.io"
+    }
+
+    try:
+        response = requests.post(INFORMATICA_URL_RAGS, json=payload)
+        
+        if response.status_code != 200:
+            return jsonify({
+                'message': 'Error from Informatica endpoint',
+                'status': response.status_code,
+                'details': response.text
+            }), 500
+            
+        return jsonify(response.json()), 200
+
+    except Exception as e:
+        return jsonify({'message': 'Error processing your request', 'error': str(e)}), 500
 
 @app.route('/api/save-reading-results', methods=['POST'])
 def save_reading_results():
@@ -92,44 +178,6 @@ def extract_fluency_rating(response_text):
     except ValueError:
         print("Error extracting fluency rating:", response_text)
         return 0
-
-
-@app.route('/api/upload-pdf', methods=['POST'])
-def upload_pdf():
-    if 'content' not in request.json:
-        print("No text content in request!")
-        return jsonify(message='No content provided!'), 400
-
-    extracted_text = request.json['content']
-
-    if not extracted_text.strip():
-        print("No text extracted from PDF!")
-        return jsonify(message='Failed to extract text from the PDF!'), 400
-
-    simplified_text = simplify_text(extracted_text)
-    
-    important_words = imp_words(simplified_text)
-    
-    important_words_list = re.findall(r'"([^"]+)"', important_words)
-
-    return jsonify(
-        message='PDF uploaded and simplified successfully!',
-        simplified_text=simplified_text,
-        important_words=important_words_list  
-    ), 200
-
-def simplify_text(text):
-    prompt = (
-        "Simplify the following text to make it more understandable:\n"
-        f"'{text}'"
-    )
-    try:
-        response = model.generate_content([prompt])
-        simplified_text = response.text.replace('**','').replace('*','')
-        return simplified_text
-    except Exception as e:
-        print(f"Error simplifying text: {e}")
-        return "Error simplifying text."
     
 def imp_words(text):
     prompt = (
@@ -222,40 +270,6 @@ def handle_gemini_prompt(file_path=None, text_prompt=None):
         print(f"Error generating content: {e}")
         return "Error generating content."
     
-@app.route('/api/ask', methods=['POST'])
-def ask():
-    user_text = request.form.get('text')
-    print(user_text)
-    user_image = request.files.get('image') if 'image' in request.files else None
-    print(user_image)
-    user_audio = request.files.get('audio') if 'audio' in request.files else None
-    print(user_audio)
-    
-    try:
-        if user_text and user_image:
-            image_path = save_file(user_image, 'user_image')
-            prompt = f"Answer the question using the text and image for a dyslexic person: '{user_text}'"
-            response = handle_gemini_prompt(file_path=image_path, text_prompt=prompt)
-        elif user_text:
-            prompt = f"Answer the question for a dyslexic person: '{user_text}'"
-            response = handle_gemini_prompt(text_prompt=prompt)
-        elif user_image:
-            image_path = save_file(user_image, 'user_image')
-            prompt = "Answer the question using the image for a dyslexic person."
-            response = handle_gemini_prompt(file_path=image_path, text_prompt=prompt)
-        elif user_audio:
-            audio_path = save_file(user_audio, 'user_audio')
-            prompt = "Answer the question asked in the the audio by a dyslexic person."
-            response = handle_gemini_prompt(file_path=audio_path, text_prompt=prompt)
-        else:
-            return jsonify(message='No valid input provided!'), 400
-            
-        return jsonify(message='Response generated successfully!', response=response), 200
-    
-    except Exception as e:
-        print(f"Error generating content: {e}")
-        return jsonify(message='Error generating improved text!'), 500
-    
 total_questions = 0
 correct_answers = 0
 
@@ -264,59 +278,6 @@ def allowed_file(filename):
     allowed_extensions = {'png', 'jpg', 'jpeg', 'gif'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
 
-def check_spelling_from_image(img_path, word):
-    """Check spelling of the word in the uploaded image."""
-    global correct_answers
-    global total_questions
-    try:
-        user_image_file = genai.upload_file(path=img_path)
-        
-        prompt = f"What is the word written in the image? Give me only the word."
-        response = model.generate_content([user_image_file, prompt])
-        
-        result = response.text.strip()
-        print(f"Gemini API response: {result}")
-
-        total_questions += 1
-
-        if result.lower() == word.lower():
-            correct_answers += 1
-            return 'Correct'
-        return 'Incorrect'
-        
-    except Exception as e:
-        print(f"An error occurred while checking spelling: {e}")
-        traceback.print_exc()  
-        raise
-
-@app.route('/api/upload_image', methods=['POST'])
-def upload_image():
-    """Handle image upload and check spelling."""
-    try:
-        if 'image' not in request.files:
-            return jsonify({'error': 'No image file provided'}), 400
-
-        image_file = request.files['image']
-        word = request.form.get('word')
-
-        if not image_file or not allowed_file(image_file.filename):
-            return jsonify({'error': 'Invalid or no image file provided'}), 400
-
-        if not word:
-            return jsonify({'error': 'No word provided'}), 400
-
-        filename = secure_filename(f'{word}.png')
-        filepath = os.path.join(UPLOAD_FOLDER, filename)
-        image_file.save(filepath)
-
-        result = check_spelling_from_image(filepath.replace('\\','/'), word)
-
-        return jsonify({'result': result, 'word': word})
-
-    except Exception as e:
-        print(f"An error occurred while processing the image: {e}")
-        traceback.print_exc()  
-        return jsonify({'error': 'An error occurred while processing the image'}), 500
 
 @app.route('/api/submit_results', methods=['POST'])
 def submit_results():

@@ -1,56 +1,14 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
-import { FaMicrophone, FaPaperPlane, FaFileImage, FaStop } from 'react-icons/fa';
+import { FaPaperPlane} from 'react-icons/fa';
 
 const Chatbot = () => {
   const [text, setText] = useState('');
-  const [image, setImage] = useState(null);
-  const [audioBlob, setAudioBlob] = useState(null);
   const [messages, setMessages] = useState([]);
-  const [isRecording, setIsRecording] = useState(false);
-  const [audioURL, setAudioURL] = useState('');
-  const mediaRecorderRef = useRef(null);
-
-  const handleFileChange = (e, setFile) => {
-    const file = e.target.files[0];
-    setFile(file);
-  };
-
-  const startRecording = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorderRef.current = new MediaRecorder(stream);
-
-      const audioChunks = [];
-      mediaRecorderRef.current.ondataavailable = (event) => {
-        audioChunks.push(event.data);
-      };
-
-      mediaRecorderRef.current.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-        setAudioBlob(audioBlob);
-        setAudioURL(URL.createObjectURL(audioBlob));
-      };
-
-      mediaRecorderRef.current.start();
-      setIsRecording(true);
-    } catch (error) {
-      console.error('Error starting recording:', error);
-    }
-  };
-
-  const stopRecording = () => {
-    if (mediaRecorderRef.current) {
-      mediaRecorderRef.current.stop();
-      setIsRecording(false);
-    }
-  };
 
   const handleSubmit = async () => {
     const formData = new FormData();
     if (text) formData.append('text', text);
-    if (image) formData.append('image', image);
-    if (audioBlob) formData.append('audio', audioBlob, 'recording.wav');
 
     setMessages([...messages, { sender: 'user', content: text }]);
 
@@ -69,9 +27,6 @@ const Chatbot = () => {
     }
 
     setText('');
-    setImage(null);
-    setAudioBlob(null);
-    setAudioURL('');
   };
 
   return (
