@@ -12,7 +12,6 @@ GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 const MindMapGenerator = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [simplifiedText, setSimplifiedText] = useState('');
-    const [importantWords, setImportantWords] = useState([]);
     const [importantPoints, setImportantPoints] = useState([]);
     const [loadingText, setLoadingText] = useState(false);
     const [message, setMessage] = useState('');
@@ -55,19 +54,23 @@ const MindMapGenerator = () => {
             console.log('Extracted text:', extractedText);
 
             const dataToSend = {
-                content: extractedText,
+                extracted_content: extractedText,
             };
 
-            const response = await axios.post('http://localhost:5000/api/upload-pdf-notes', dataToSend, {
+            const response = await axios.post('http://localhost:5000/api/generate-notes', dataToSend, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
             });
 
             console.log('Response from server:', response.data);
-            setSimplifiedText(response.data.simplified_text);
-            setImportantWords(response.data.important_words);
-            setImportantPoints(response.data.important_points);
+
+            const combined_response = response.data;
+            setSimplifiedText(combined_response.notes.LLM_Response);
+
+            const combined_response_mindmap = combined_response.mindmap;
+            setImportantPoints([combined_response_mindmap.LLM_Answer1, combined_response_mindmap.LLM_Answer2, combined_response_mindmap.LLM_Answer3]);
+
             console.log(response.data.important_points)
             setMessage('PDF uploaded and simplified successfully!');
         } catch (error) {
@@ -101,15 +104,6 @@ const MindMapGenerator = () => {
         doc.save('simplified_text.pdf');
     };
 
-    const highlightImportantWords = (text, importantWords) => {
-        let highlightedText = text;
-        importantWords.forEach(word => {
-            const regex = new RegExp(`(${word})`, 'gi');
-            highlightedText = highlightedText.replace(regex, '<mark>$1</mark>');
-        });
-        return highlightedText;
-    };
-
     return (
         <div className="bg-gradient-to-r from-green-200 via-blue-200 to-purple-200 min-h-screen p-8 flex flex-col items-center" style={{ fontFamily: 'OpenDyslexic', lineHeight: '1.5' }}>
             <ToastContainer />
@@ -137,7 +131,7 @@ const MindMapGenerator = () => {
             {simplifiedText && (
                 <div className="mt-4 bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl">
                     <h2 className="text-xl font-bold">Simplified Text:</h2>
-                    <p className="mt-2 whitespace-pre-wrap text-gray-700" dangerouslySetInnerHTML={{ __html: highlightImportantWords(simplifiedText, importantWords) }} />
+                    <p className="mt-2 whitespace-pre-wrap text-gray-700"> {simplifiedText} </p>
 
                     <button
                         className="bg-green-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-green-600 transition duration-300 ease-in-out"

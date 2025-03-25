@@ -28,6 +28,8 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 INFORMATICA_URL_CHATBOT = "https://usw5-cai.dm-us.informaticacloud.com/active-bpel/public/rt/9VCedj3QY7Lc198InmXVkW/DyslexiaTextChatbot"
 INFORMATICA_URL_RAGS = "https://usw5-cai.dm-us.informaticacloud.com/active-bpel/public/rt/9VCedj3QY7Lc198InmXVkW/Query_LLM_With_Context_Using_Embeddings_Model"
 INFORMATICA_FILL_PINECONE_URL = "https://usw5-cai.dm-us.informaticacloud.com/active-bpel/public/rt/9VCedj3QY7Lc198InmXVkW/Fill_Empty_Pinecone_Index_Using_Gemini_AI"
+INFORMATICA_URL_NOTES = "https://usw5-cai.dm-us.informaticacloud.com/active-bpel/public/rt/9VCedj3QY7Lc198InmXVkW/NotesGeneration"
+INFORMATICA_URL_MINDMAP = "https://usw5-cai.dm-us.informaticacloud.com/active-bpel/public/rt/9VCedj3QY7Lc198InmXVkW/MindMapGeneration"
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -136,6 +138,61 @@ def query_llm():
 
     except Exception as e:
         return jsonify({'message': 'Error processing your request', 'error': str(e)}), 500
+    
+@app.route('/api/generate-notes', methods=['POST'])
+def generate_notes():
+    data = request.json
+    extracted_content = data.get("extracted_content")
+    if not extracted_content:
+        return jsonify({"error": "Missing 'extracted_content' in request"}), 400
+
+    payload = {
+        "extracted_content": extracted_content
+    }
+
+    try:
+        notes_response = requests.post(INFORMATICA_URL_NOTES, json=payload)
+        if notes_response.status_code != 200:
+            return jsonify({
+                'message': 'Error from Informatica Notes endpoint',
+                'status': notes_response.status_code,
+                'details': notes_response.text
+            }), 500
+        
+        notes_json = notes_response.json()
+        user_prompt = notes_json.get("LLM_Response")
+        if not user_prompt:
+            return jsonify({"error": "Notes generation did not return 'LLM_Response'"}), 500
+        
+        mindmap_json = generate_mindmap(user_prompt)
+        
+        print(mindmap_json)
+        
+        combined_response = {
+            "notes": notes_json,
+            "mindmap": mindmap_json
+        }
+        
+        return jsonify(combined_response), 200
+
+    except Exception as e:
+        return jsonify({'message': 'Error processing your request', 'error': str(e)}), 500
+
+def generate_mindmap(user_prompt):
+    payload = {
+        "user_prompt": user_prompt
+    }
+    try:
+        response = requests.post(INFORMATICA_URL_MINDMAP, json=payload)
+        if response.status_code != 200:
+            return {
+                'message': 'Error from Informatica MindMap endpoint',
+                'status': response.status_code,
+                'details': response.text
+            }
+        return response.json()
+    except Exception as e:
+        return {'message': 'Error processing mindmap request', 'error': str(e)}
 
 @app.route('/api/save-reading-results', methods=['POST'])
 def save_reading_results():
@@ -178,76 +235,6 @@ def extract_fluency_rating(response_text):
     except ValueError:
         print("Error extracting fluency rating:", response_text)
         return 0
-    
-def imp_words(text):
-    prompt = (
-        "Give me only most important words from the text in the form of an array.:\n"
-        f"'{text}'"
-    )
-    try:
-        response = model.generate_content([prompt])
-        words = response.text.replace('**','').replace('*','')
-        return words
-    except Exception as e:
-        print(f"Error simplifying text: {e}")
-        return "Error simplifying text."
-    
-@app.route('/api/upload-pdf-notes', methods=['POST'])
-def upload_pdf_notes():
-    if 'content' not in request.json:
-        print("No text content in request!")
-        return jsonify(message='No content provided!'), 400
-
-    extracted_text = request.json['content']
-
-    if not extracted_text.strip():
-        print("No text extracted from PDF!")
-        return jsonify(message='Failed to extract text from the PDF!'), 400
-
-    simplified_text = generate_notes(extracted_text)
-    
-    important_words = imp_words(simplified_text)
-    
-    important_words_list = re.findall(r'"([^"]+)"', important_words)
-    
-    important_points = extract_key_points_from_gemini(simplified_text)
-    
-    important_points_list = re.findall(r'"([^"]+)"', important_points)
-
-    return jsonify(
-        message='PDF uploaded and simplified successfully!',
-        simplified_text=simplified_text,
-        important_words=important_words_list,
-        important_points=important_points_list
-    ), 200
-
-def generate_notes(text):
-    print(text)
-    prompt = (
-        "Generate proper notes in a brief manner from the text provided.:\n"
-        f"'{text}'"
-    )
-    try:
-        response = model.generate_content([prompt])
-        simplified_text = response.text.replace('**','').replace('*','')
-        return simplified_text
-    except Exception as e:
-        print(f"Error simplifying text: {e}")
-        return "Error simplifying text."
-    
-def extract_key_points_from_gemini(text):
-    prompt = (
-        "Provide 3 consice points to create a mindmap in the form of an array:\n"
-        f"'{text}'"
-    )
-    try:
-        response = model.generate_content([prompt])
-        key_points = response.text.replace('**','').replace('*','')
-        print(key_points)
-        return key_points
-    except Exception as e:
-        print(f"Error extracting key points: {e}")
-        return []
     
 def save_file(file, prefix):
     """Save the file securely and return its path."""
