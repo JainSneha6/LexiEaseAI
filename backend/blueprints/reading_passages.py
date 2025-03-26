@@ -7,7 +7,7 @@ import google.generativeai as genai
 from flask import Blueprint, request, jsonify
 import requests
 
-reading_passages_bp = Blueprint('misc', __name__)
+reading_passages_bp = Blueprint('reading_passages', __name__)
 
 INFORMATICA_URL_MODEL_SERVE = "https://usw5-dsml.dm-us.informaticacloud.com/ml-predict/api/v1/deployment/dXpgn2QaD2PhHnhROcBQqr"
 

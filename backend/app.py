@@ -21,7 +21,7 @@ def create_app():
     from blueprints.query_llm import query_llm_bp
     from blueprints.generate_notes import generate_notes_bp
     from blueprints.mindmap import generate_mindmap_bp
-    from backend.blueprints.reading_passages import reading_passages_bp
+    from blueprints.reading_passages import reading_passages_bp
     from blueprints.passages_snowflake import passages_snowflake_bp
     
     app.register_blueprint(auth_bp, url_prefix="/api")
