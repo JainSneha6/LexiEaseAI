@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist/build/pdf';
 import { jsPDF } from 'jspdf';
@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ReactFlow, { MiniMap, Controls, Background, ReactFlowProvider } from 'reactflow';
 import 'reactflow/dist/style.css';
+import ReactMarkdown from "react-markdown";
 
 GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${'2.13.216'}/pdf.worker.min.js`;
 
@@ -14,6 +15,7 @@ const MindMapGenerator = () => {
     const [simplifiedText, setSimplifiedText] = useState('');
     const [importantPoints, setImportantPoints] = useState([]);
     const [loadingText, setLoadingText] = useState(false);
+    const [loadingMindmap, setLoadingMindmap] = useState(false);
     const [message, setMessage] = useState('');
 
     const handleFileChange = (event) => {
@@ -22,6 +24,9 @@ const MindMapGenerator = () => {
             console.log('Selected file:', file);
             setSelectedFile(file);
             setMessage('');
+            // Reset previous states
+            setSimplifiedText('');
+            setImportantPoints([]);
         } else {
             setMessage('Please select a valid file.');
         }
@@ -42,42 +47,60 @@ const MindMapGenerator = () => {
         return text.trim();
     };
 
-    const handleUpload = async () => {
+    const handleGenerateNotes = async () => {
         if (!selectedFile) {
             setMessage('Please select a file to upload.');
             return;
         }
-
         try {
             setLoadingText(true);
             const extractedText = await extractTextFromPDF(selectedFile);
-            console.log('Extracted text:', extractedText);
+            console.log('Extracted text for notes:', extractedText);
 
-            const dataToSend = {
-                extracted_content: extractedText,
-            };
+            const dataToSend = { extracted_content: extractedText };
 
             const response = await axios.post('http://localhost:5000/api/generate-notes', dataToSend, {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
+            });
+
+            setSimplifiedText(response.data.LLM_Response);
+            setMessage('Notes generated successfully!');
+        } catch (error) {
+            console.error('Error generating notes:', error.response ? error.response.data : error.message);
+            setMessage('Error generating notes: ' + (error.response ? error.response.data.message : error.message));
+        }
+        setLoadingText(false);
+    };
+
+    const handleGenerateMindMap = async () => {
+        if (!selectedFile) {
+            setMessage('Please select a file to upload.');
+            return;
+        }
+        try {
+            setLoadingMindmap(true);
+            const extractedText = await extractTextFromPDF(selectedFile);
+            console.log('Extracted text for mind map:', extractedText);
+
+            const dataToSend = { extracted_content: simplifiedText };
+
+            const response = await axios.post('http://localhost:5000/api/generate-mindmap', dataToSend, {
+                headers: { 'Content-Type': 'application/json' },
             });
 
             console.log('Response from server:', response.data);
-
-            const combined_response = response.data;
-            setSimplifiedText(combined_response.notes.LLM_Response);
-
-            const combined_response_mindmap = combined_response.mindmap;
-            setImportantPoints([combined_response_mindmap.LLM_Answer1, combined_response_mindmap.LLM_Answer2, combined_response_mindmap.LLM_Answer3]);
-
-            console.log(response.data.important_points)
-            setMessage('PDF uploaded and simplified successfully!');
+            const combined_response_mindmap = response.data;
+            setImportantPoints([
+                combined_response_mindmap.LLM_Answer1,
+                combined_response_mindmap.LLM_Answer2,
+                combined_response_mindmap.LLM_Answer3
+            ]);
+            setMessage('Mind Map generated successfully!');
         } catch (error) {
-            console.error('Error uploading the PDF:', error.response ? error.response.data : error.message);
-            setMessage('Error uploading the PDF! ' + (error.response ? error.response.data.message : error.message));
+            console.error('Error generating mind map:', error.response ? error.response.data : error.message);
+            setMessage('Error generating mind map: ' + (error.response ? error.response.data.message : error.message));
         }
-        setLoadingText(false);
+        setLoadingMindmap(false);
     };
 
     const handleDownloadPDF = () => {
@@ -85,7 +108,6 @@ const MindMapGenerator = () => {
             setMessage('No simplified text to download.');
             return;
         }
-
         const doc = new jsPDF();
         doc.setFontSize(12);
         const lines = doc.splitTextToSize(simplifiedText, 190);
@@ -119,20 +141,30 @@ const MindMapGenerator = () => {
                 />
             </div>
 
-            <button
-                className="bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 px-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
-                onClick={handleUpload}
-            >
-                {loadingText?'Uploading and Providing Notes...':'Upload and Provide Notes'}
-            </button>
+            <div className="flex space-x-4 mb-4">
+                <button
+                    className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
+                    onClick={handleGenerateNotes}
+                    disabled={loadingText}
+                >
+                    {loadingText ? 'Processing...' : 'Generate Notes'}
+                </button>
+
+                <button
+                    className="bg-purple-500 text-white py-2 px-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out"
+                    onClick={handleGenerateMindMap}
+                    disabled={loadingMindmap}
+                >
+                    {loadingMindmap ? 'Processing...' : 'Generate Mind Map'}
+                </button>
+            </div>
 
             {message && <p className="mt-4 text-red-600">{message}</p>}
 
             {simplifiedText && (
                 <div className="mt-4 bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl">
-                    <h2 className="text-xl font-bold">Simplified Text:</h2>
-                    <p className="mt-2 whitespace-pre-wrap text-gray-700"> {simplifiedText} </p>
-
+                    <h2 className="text-xl font-bold mb-8">Simplified Text:</h2>
+                    <ReactMarkdown>{String(simplifiedText)}</ReactMarkdown>
                     <button
                         className="bg-green-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-green-600 transition duration-300 ease-in-out"
                         onClick={handleDownloadPDF}
@@ -177,9 +209,9 @@ const MindMap = ({ importantPoints }) => {
 const createMindMapElements = (points) => {
     const nodes = [];
     const edges = [];
-    const centerX = 500;  
-    const centerY = 300;  
-    const radius = 400;  
+    const centerX = 500;
+    const centerY = 300;
+    const radius = 400;
 
     points.forEach((point, index) => {
         const nodeId = `${index + 1}`;
@@ -189,13 +221,10 @@ const createMindMapElements = (points) => {
         nodes.push({
             id: nodeId,
             data: { label: point },
-            position: {
-                x: xPos,
-                y: yPos
-            },
+            position: { x: xPos, y: yPos },
             style: {
-                width: 350,  
-                height: 150,  
+                width: 350,
+                height: 150,
                 backgroundColor: '#b2ebf2',
                 backgroundImage: 'linear-gradient(to right, #e0f7fa, #b2ebf2)',
                 border: '2px solid #00796b',
@@ -205,8 +234,8 @@ const createMindMapElements = (points) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 textAlign: 'center',
-                fontSize: '18px',  
-                padding: '25px',  
+                fontSize: '18px',
+                padding: '25px',
                 wordWrap: 'break-word',
             }
         });
@@ -217,7 +246,7 @@ const createMindMapElements = (points) => {
                 source: '0',
                 target: nodeId,
                 animated: true,
-                type: 'bezier', 
+                type: 'bezier',
                 style: { stroke: '#00796b' }
             });
         }
@@ -225,12 +254,12 @@ const createMindMapElements = (points) => {
 
     nodes.push({
         id: '0',
-        data: { label: 'Central Idea' },  
+        data: { label: 'Central Idea' },
         position: { x: centerX, y: centerY },
         style: {
-            width: 350,  
+            width: 350,
             height: 150,
-            backgroundColor: '#fff59d', 
+            backgroundColor: '#fff59d',
             border: '2px solid #fbc02d',
             borderRadius: '20px',
             boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
@@ -238,7 +267,7 @@ const createMindMapElements = (points) => {
             justifyContent: 'center',
             alignItems: 'center',
             textAlign: 'center',
-            fontSize: '20px', 
+            fontSize: '20px',
             padding: '30px',
             fontWeight: 'bold',
         }

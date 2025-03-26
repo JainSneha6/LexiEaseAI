@@ -1,23 +1,19 @@
-from flask import Blueprint, request, jsonify
-import os, traceback
-from werkzeug.utils import secure_filename
+import os
+import json
+import re
+import joblib
+import pandas as pd
 import google.generativeai as genai
+from flask import Blueprint, request, jsonify
 import requests
 
 misc_bp = Blueprint('misc', __name__)
 
+INFORMATICA_URL_MODEL_SERVE = "https://usw5-dsml.dm-us.informaticacloud.com/ml-predict/api/v1/deployment/dXpgn2QaD2PhHnhROcBQqr"
+
 API_KEY = "AIzaSyC6X83C-yPa-KYJnajVxPIYvisYOcQcqmc"
 genai.configure(api_key=API_KEY)
-model = genai.GenerativeModel('gemini-1.5-flash')
-
-@misc_bp.route('/save-reading-results', methods=['POST'])
-def save_reading_results():
-    data = request.get_json()
-    reading_speed = data.get('readingSpeed')
-    time_taken = data.get('timeTaken')
-
-    print(f"Reading Speed: {reading_speed}, Time Taken: {time_taken}")
-    return jsonify(message='Reading results saved successfully!'), 200
+gemini_model = genai.GenerativeModel('gemini-1.5-flash')
 
 @misc_bp.route('/upload-audio', methods=['POST'])
 def upload_audio():
@@ -25,45 +21,69 @@ def upload_audio():
         return jsonify(message='No audio file provided!'), 400
 
     audio_file = request.files['audio']
-    audio_path = os.path.join('uploads', f'reading_test.wav')
+    audio_path = os.path.join('uploads', 'reading_test.wav')
     audio_file.save(audio_path)
 
     fluency_rating = assess_fluency(audio_path)
     print(fluency_rating)
     return jsonify(message='Audio uploaded successfully!', fluency_rating=fluency_rating), 200
 
-def assess_fluency(audio_path):
-    prompt = "Rate the fluency of the audio from 100. Just give me the number."
+def assess_fluency_model_serve(audio_path):
+    prompt = (
+        "Analyze the provided audio and return a JSON object with the following keys with only numbers. No text: "
+        "'ReadingSpeedWPM', 'PronunciationErrors', 'Omissions', 'Insertions', "
+        "'Substitutions', 'Repetitions', 'Hesitations'. Provide numeric values for each key."
+    )
     user_audio_file = genai.upload_file(path=audio_path)
-    response = model.generate_content([user_audio_file, prompt])
-    fluency_rating = extract_fluency_rating(response.text)
-    return fluency_rating
-
-def extract_fluency_rating(response_text):
+    response = gemini_model.generate_content([user_audio_file, prompt])
+    
+    response_text = response.text.strip()
+    response_text = re.sub(r'^```(?:json)?\n', '', response_text)
+    response_text = re.sub(r'\n```$', '', response_text)
+    
     try:
-        fluency_rating = int(response_text.strip())
-        return fluency_rating
-    except ValueError:
-        print("Error extracting fluency rating:", response_text)
-        return 0
-
-@misc_bp.route('/submit_results', methods=['POST'])
-def submit_results():
-    global total_questions, correct_answers
-    try:
-        if total_questions == 0:
-            return jsonify({'score': 0, 'total_questions': 0, 'correct_answers': 0})
-
-        score_percentage = (correct_answers / total_questions) * 100
-        total_questions = 0
-        correct_answers = 0
-
-        return jsonify({
-            'score': score_percentage,
-            'total_questions': total_questions,
-            'correct_answers': correct_answers
-        })
+        fluency_metrics = json.loads(response_text)
     except Exception as e:
-        print(f"An error occurred while calculating the score: {e}")
-        traceback.print_exc()  
-        return jsonify({'error': 'An error occurred while calculating the score'}), 500
+        print("Error parsing fluency JSON:", response.text, e)
+        return {}
+
+    try:
+        fluency = requests.post(INFORMATICA_URL_MODEL_SERVE, json=fluency_metrics)
+        if fluency.status_code != 200:
+            return jsonify({
+                'message': 'Error from Informatica Notes endpoint',
+                'status': fluency.status_code,
+                'details': fluency.text
+            }), 500
+        
+        fluency_json = fluency.json()
+        
+        return jsonify(fluency_json), 200
+
+    except Exception as e:
+        return jsonify({'message': 'Error processing your request', 'error': str(e)}), 500
+
+def assess_fluency(audio_path):
+    prompt = (
+        "Analyze the provided audio and return a JSON object with the following keys with only numbers. No text: "
+        "'ReadingSpeedWPM', 'PronunciationErrors', 'Omissions', 'Insertions', "
+        "'Substitutions', 'Repetitions', 'Hesitations'. Provide numeric values for each key."
+    )
+    user_audio_file = genai.upload_file(path=audio_path)
+    response = gemini_model.generate_content([user_audio_file, prompt])
+    
+    response_text = response.text.strip()
+    response_text = re.sub(r'^```(?:json)?\n', '', response_text)
+    response_text = re.sub(r'\n```$', '', response_text)
+    
+    try:
+        fluency_metrics = json.loads(response_text)
+    except Exception as e:
+        print("Error parsing fluency JSON:", response.text, e)
+        return {}
+    
+    prediction_model = joblib.load('D:/LexiEaseAI/backend/models/fluency_model.pkl')
+    input_data = pd.DataFrame([fluency_metrics])
+    prediction = prediction_model.predict(input_data)
+    model_prediction = {'Fluency': prediction[0]}
+    return model_prediction

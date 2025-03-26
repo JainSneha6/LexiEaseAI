@@ -20,6 +20,7 @@ def create_app():
     from blueprints.fill_pinecone import fill_pinecone_bp
     from blueprints.query_llm import query_llm_bp
     from blueprints.generate_notes import generate_notes_bp
+    from blueprints.mindmap import generate_mindmap_bp
     from blueprints.misc import misc_bp
     
     app.register_blueprint(auth_bp, url_prefix="/api")
@@ -27,6 +28,7 @@ def create_app():
     app.register_blueprint(fill_pinecone_bp, url_prefix="/api")
     app.register_blueprint(query_llm_bp, url_prefix="/api")
     app.register_blueprint(generate_notes_bp, url_prefix="/api")
+    app.register_blueprint(generate_mindmap_bp, url_prefix="/api")
     app.register_blueprint(misc_bp, url_prefix="/api")
     
     return app

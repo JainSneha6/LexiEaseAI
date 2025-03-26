@@ -68,21 +68,6 @@ const GrayOralReadingTest = () => {
     }
   };
 
-  const saveResultsToBackend = async (speed, timeTaken) => {
-
-
-    try {
-      await axios.post(
-        'http://localhost:5000/api/save-reading-results',
-        { readingSpeed: speed, timeTaken },
-      );
-      toast.success('Results saved successfully!');
-    } catch (error) {
-      console.error('Error saving results:', error.response ? error.response.data : error.message);
-      toast.error('Error saving results!');
-    }
-  };
-
   const uploadAudioToBackend = async () => {
     if (!audioBlob) {
       toast.error('No audio recorded!');
@@ -98,7 +83,8 @@ const GrayOralReadingTest = () => {
         },
       });
 
-      setFluencyRating(response.data.fluency_rating);
+      setFluencyRating(response.data.fluency_rating.Fluency);
+      console.log(response.data)
       toast.success('Audio uploaded successfully!');
     } catch (error) {
       console.error('Error uploading audio:', error.response ? error.response.data : error.message);
@@ -108,7 +94,6 @@ const GrayOralReadingTest = () => {
 
   useEffect(() => {
     if (isTestCompleted && audioBlob) {
-      saveResultsToBackend(readingSpeed, readingTime);
       uploadAudioToBackend();
     }
   }, [isTestCompleted, audioBlob]);
