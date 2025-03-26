@@ -14,10 +14,40 @@ const GrayOralReadingTest = () => {
   const [fluencyRating, setFluencyRating] = useState(null);
   const [startTime, setStartTime] = useState(null);
 
-  const passage =
-    'The sun is bright in the sky. Birds fly high and sing sweet songs. Trees sway gently in the wind.';
+  // State to store the combined list of passages
+  const [passagesList, setPassagesList] = useState([]);
+  // Current index of the passage being displayed
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Fetch passages from the backend and merge them into one array
+  useEffect(() => {
+    axios
+      .get('http://localhost:5000/api/passages')
+      .then((response) => {
+        // Merge all arrays (easy, medium, hard) into one list.
+        const merged = [
+          ...response.data.easy,
+          ...response.data.medium,
+          ...response.data.hard,
+        ];
+        setPassagesList(merged);
+      })
+      .catch((error) => {
+        console.error('Error fetching passages:', error);
+        toast.error('Error fetching passages from backend.');
+      });
+  }, []);
+
+  // The current passage text is taken from the "MEDIUM" key (adjust if needed)
+  const currentPassage = passagesList[currentIndex]
+    ? passagesList[currentIndex].MEDIUM
+    : '';
 
   const handleStartReading = async () => {
+    if (!currentPassage) {
+      toast.error('No passage available to read.');
+      return;
+    }
     setIsReading(true);
     setStartTime(Date.now());
 
@@ -57,7 +87,7 @@ const GrayOralReadingTest = () => {
     setReadingTime(timeTaken);
     setIsTestCompleted(true);
 
-    const wordsInPassage = passage.split(' ').length;
+    const wordsInPassage = currentPassage.split(' ').length;
     const speed = (wordsInPassage / (timeTaken / 60)).toFixed(2);
     setReadingSpeed(speed);
 
@@ -82,9 +112,8 @@ const GrayOralReadingTest = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-
       setFluencyRating(response.data.fluency_rating.Fluency);
-      console.log(response.data)
+      console.log(response.data);
       toast.success('Audio uploaded successfully!');
     } catch (error) {
       console.error('Error uploading audio:', error.response ? error.response.data : error.message);
@@ -92,29 +121,65 @@ const GrayOralReadingTest = () => {
     }
   };
 
+  // When the test is completed and audioBlob is available, upload audio to backend.
   useEffect(() => {
     if (isTestCompleted && audioBlob) {
       uploadAudioToBackend();
     }
   }, [isTestCompleted, audioBlob]);
 
+  // Reset states and move to the next passage
+  const handleNextPassage = () => {
+    // Reset states for the next test
+    setIsReading(false);
+    setIsRecording(false);
+    setMediaRecorder(null);
+    setAudioBlob(null);
+    setReadingTime(0);
+    setIsTestCompleted(false);
+    setReadingSpeed(0);
+    setFluencyRating(null);
+    setStartTime(null);
+
+    // Move to next passage if available; otherwise, restart from the beginning
+    if (currentIndex < passagesList.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    } else {
+      toast.info('No more passages available. Restarting.');
+      setCurrentIndex(0);
+    }
+  };
+
   return (
-    <div className="bg-gradient-to-r from-green-200 via-blue-200 to-purple-200 min-h-screen p-8 flex flex-col items-center" style={{ fontFamily: 'OpenDyslexic', lineHeight: '1.5' }}>
+    <div
+      className="bg-gradient-to-r from-green-200 via-blue-200 to-purple-200 min-h-screen p-8 flex flex-col items-center"
+      style={{ fontFamily: 'OpenDyslexic', lineHeight: '1.5' }}
+    >
       <ToastContainer />
-      <h2 className="text-4xl font-bold text-blue-800 mb-8 text-center">Gray Oral Reading Test</h2>
+      <h2 className="text-4xl font-bold text-blue-800 mb-8 text-center">
+        Gray Oral Reading Test
+      </h2>
 
-      <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full mx-auto text-center">
-        <h3 className="text-xl font-bold mb-4">Read the following passage:</h3>
-        <p className="text-gray-700 mb-4">{passage}</p>
+      <div className="bg-white shadow-lg rounded-lg p-8 max-w-3xl w-full mx-auto text-center">
+        {currentPassage ? (
+          <>
+            <h3 className="text-xl font-bold mb-4">Read the following passage:</h3>
+            <p className="text-gray-700 mb-4">{currentPassage}</p>
+          </>
+        ) : (
+          <p>Loading passage...</p>
+        )}
 
-        {!isReading ? (
+        {!isReading && !isTestCompleted && (
           <button
             onClick={handleStartReading}
             className="bg-gradient-to-r from-green-400 to-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105"
           >
             Start Reading
           </button>
-        ) : (
+        )}
+
+        {isReading && (
           <button
             onClick={handleFinishReading}
             className="bg-gradient-to-r from-red-400 to-red-600 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105"
@@ -137,6 +202,12 @@ const GrayOralReadingTest = () => {
                 Fluency Rating: <span className="font-semibold">{fluencyRating}</span>
               </p>
             )}
+            <button
+              onClick={handleNextPassage}
+              className="mt-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105"
+            >
+              Next Passage
+            </button>
           </div>
         )}
       </div>

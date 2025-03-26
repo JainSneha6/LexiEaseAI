@@ -7,7 +7,7 @@ import google.generativeai as genai
 from flask import Blueprint, request, jsonify
 import requests
 
-misc_bp = Blueprint('misc', __name__)
+reading_passages_bp = Blueprint('misc', __name__)
 
 INFORMATICA_URL_MODEL_SERVE = "https://usw5-dsml.dm-us.informaticacloud.com/ml-predict/api/v1/deployment/dXpgn2QaD2PhHnhROcBQqr"
 
@@ -15,7 +15,7 @@ API_KEY = "AIzaSyC6X83C-yPa-KYJnajVxPIYvisYOcQcqmc"
 genai.configure(api_key=API_KEY)
 gemini_model = genai.GenerativeModel('gemini-1.5-flash')
 
-@misc_bp.route('/upload-audio', methods=['POST'])
+@reading_passages_bp.route('/upload-audio', methods=['POST'])
 def upload_audio():
     if 'audio' not in request.files:
         return jsonify(message='No audio file provided!'), 400
@@ -87,3 +87,6 @@ def assess_fluency(audio_path):
     prediction = prediction_model.predict(input_data)
     model_prediction = {'Fluency': prediction[0]}
     return model_prediction
+
+
+

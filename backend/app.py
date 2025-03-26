@@ -21,7 +21,8 @@ def create_app():
     from blueprints.query_llm import query_llm_bp
     from blueprints.generate_notes import generate_notes_bp
     from blueprints.mindmap import generate_mindmap_bp
-    from blueprints.misc import misc_bp
+    from backend.blueprints.reading_passages import reading_passages_bp
+    from blueprints.passages_snowflake import passages_snowflake_bp
     
     app.register_blueprint(auth_bp, url_prefix="/api")
     app.register_blueprint(chatbot_bp, url_prefix="/api")
@@ -29,7 +30,8 @@ def create_app():
     app.register_blueprint(query_llm_bp, url_prefix="/api")
     app.register_blueprint(generate_notes_bp, url_prefix="/api")
     app.register_blueprint(generate_mindmap_bp, url_prefix="/api")
-    app.register_blueprint(misc_bp, url_prefix="/api")
+    app.register_blueprint(reading_passages_bp, url_prefix="/api")
+    app.register_blueprint(passages_snowflake_bp, url_prefix="/api")
     
     return app
 
