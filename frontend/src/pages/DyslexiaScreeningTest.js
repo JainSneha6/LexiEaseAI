@@ -4,16 +4,16 @@ import { FaCheckCircle, FaSoundcloud, FaBrain, FaBook } from 'react-icons/fa'; /
 
 const tests = [
   {
-    title: 'Phonological Awareness Test',
-    description: 'A test designed to evaluate the ability to recognize and manipulate the sounds of spoken language.',
-    link: '/phonological-awareness-test',
-    icon: <FaSoundcloud className="text-blue-700 text-5xl" />,
-  },
-  {
     title: 'Gray Oral Reading Test',
     description: 'A standardized test used to measure reading fluency and comprehension skills in individuals.',
     link: '/gray-oral-reading',
     icon: <FaBook className="text-red-700 text-5xl" />,
+  },
+  {
+    title: 'Phonological Awareness Test',
+    description: 'A test designed to evaluate the ability to recognize and manipulate the sounds of spoken language.',
+    link: '/phonological-awareness-test',
+    icon: <FaSoundcloud className="text-blue-700 text-5xl" />,
   },
 ];
 

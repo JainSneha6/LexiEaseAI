@@ -7,6 +7,7 @@ import random
 
 passages_snowflake_bp = Blueprint('passages_snowflake', __name__)
 
+load_dotenv()
 
 def get_snowflake_connection():
     return snowflake.connector.connect(
@@ -18,7 +19,6 @@ def get_snowflake_connection():
         warehouse=os.getenv("SNOWFLAKE_WAREHOUSE"),
         role=os.getenv("SNOWFLAKE_ROLE")
     )
-
 
 @passages_snowflake_bp.route('/passages', methods=['GET'])
 def get_passages():
@@ -33,13 +33,10 @@ def get_passages():
 
     print(rows)
 
-    # Extract column names
     columns = [desc[0] for desc in cursor.description]
 
-    # Convert data to a list of dictionaries
     passages = [dict(zip(columns, row)) for row in rows]
-
-    # Close connection
+    
     cursor.close()
     conn.close()
 

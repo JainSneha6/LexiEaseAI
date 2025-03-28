@@ -163,7 +163,7 @@ const MindMapGenerator = () => {
 
             {simplifiedText && (
                 <div className="mt-4 bg-white shadow-lg rounded-lg p-6 w-full max-w-4xl">
-                    <h2 className="text-xl font-bold mb-8">Simplified Text:</h2>
+                    <h2 className="text-xl font-bold mb-8">Concise Notes:</h2>
                     <ReactMarkdown>{String(simplifiedText)}</ReactMarkdown>
                     <button
                         className="bg-green-500 text-white py-2 px-4 rounded-lg mt-4 hover:bg-green-600 transition duration-300 ease-in-out"
