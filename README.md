@@ -154,7 +154,7 @@ Modern enterprises rely on multiple applications to drive business operations. I
   <img src="https://github.com/user-attachments/assets/0b7dbe16-6538-4c75-a5a2-0dc25d2e995d" width="1000">
 </div>  
 
-The first image illustrates an **AI-powered Text-to-Text Chatbot integration** using Informatica’s application integration services. This chatbot leverages APIs and workflow automation to process user queries, generate responses, and facilitate seamless conversational AI experiences. The integration ensures real-time interactions while maintaining high reliability and security.  
+This image illustrates an **AI-powered Text-to-Text Chatbot integration** using Informatica’s application integration services. This chatbot leverages APIs and workflow automation to process user queries, generate responses, and facilitate seamless conversational AI experiences. The integration ensures real-time interactions while maintaining high reliability and security.  
 
 #### **2. Prompt Chaining Mind Map Generation Recipe**  
 
@@ -162,24 +162,34 @@ The first image illustrates an **AI-powered Text-to-Text Chatbot integration** u
   <img src="https://github.com/user-attachments/assets/74b10d91-107d-4482-9774-5a3cbf75289d" width="1000">
 </div>  
 
-The second image demonstrates a **Prompt Chaining Mind Map Generation** workflow. This setup allows multiple AI-generated responses to be linked together in a structured way, creating a mind map representation of ideas. By integrating different AI models and APIs, Informatica enables dynamic and automated content generation to enhance brainstorming, research, and decision-making processes.  
+This image demonstrates a **Prompt Chaining Mind Map Generation** workflow. This setup allows multiple AI-generated responses to be linked together in a structured way, creating a mind map representation of ideas. By integrating different AI models and APIs, Informatica enables dynamic and automated content generation to enhance brainstorming, research, and decision-making processes.  
 
 #### **3. Notes Generation Recipe**  
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/b7d1e3fd-0d8d-40f8-8029-3cd680934355" width="1000">
+  <img src="https://github.com/user-attachments/assets/65361ac3-bb45-405a-97b6-a2819aaaa256" width="1000">
 </div>  
 
-The third image shows a **Notes Generation** workflow, which is valid and ready for publishing. The workflow starts by extracting content, then creating a prompt, followed by generating content, and finally returning an LLM response. 
+This image shows a **Notes Generation** workflow, which is valid and ready for publishing. The workflow starts by taking the content of the document from the frontend, then creating a prompt, followed by generating content, and finally returning an LLM response. 
 
 
 #### **4. Chat With Document Recipe**  
+
+1. Filling Empty Pinecone Index using Gemini AI
+
+  <div align="center">
+    <img src="https://github.com/user-attachments/assets/7ad2c985-cd78-474b-abd3-6a83c0039ed1" width="1000">
+  </div>  
+
+  This images shows a **Filling Empty Pinecone Index using Gemini AI** workflow, which is valid and ready for publishing. The workflow starts by generating embeddings for the initial text, then filling it in the required Pinecone index.
+
+2. Query LLM With Context Using Embeddings Model
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/8573aac4-6078-4033-aa0a-3e398aba903e" width="1000">
 </div>  
 
-The fourth image shows a **Chat With Document** workflow, which is valid and ready for publishing. The workflow sets up LLM models, generates embeddings, prepares a request with context, queries Gemini LLM, and stores the response. This setup enhances LLM responses by incorporating contextual embeddings for better query understanding.  
+The fourth image shows a **Query LLM With Context Using Embeddings Model** workflow, which is valid and ready for publishing. The workflow sets up LLM models, generates embeddings, prepares a request with context, queries Gemini LLM, and stores the response. This setup enhances LLM responses by incorporating contextual embeddings for better query understanding.  
 
 ---
 
